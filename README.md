@@ -1,66 +1,49 @@
-# Documentation for v.pradinė version
+## Code Overview
 
-## Overview
+The provided code is a C++ program for managing student information. It includes functionalities to input student data, calculate averages and medians, and display the results. Below is a summary of the key components and functionalities:
 
-This program is designed to manage student information including their names, homework scores, exam scores, and calculated averages and medians. It generates random student data, calculates statistics, and displays the information in a formatted manner.
+### Struct Definition
 
-## File Structure
+- `studentInfo`: A struct defining the structure of student information, including first name, last name, homework score, exam score, median, average, and modified average.
 
-The program consists of a single source code file named `student_info_management.cpp`.
+### Functions
 
-## Functions
+1. `singleSutdentInfoPrinter`: Prints the information of a single student.
+2. `calculateAverage`: Calculates the weighted average of homework and exam scores.
+3. `findLongestName`: Finds the length of the longest first name among student data.
+4. `findLongestLastname`: Finds the length of the longest last name among student data.
+5. `invalidInput`: Prints a message for invalid input.
+6. `singleInputModule`: Takes input for a single student's information.
+7. `selectionOptionValidator`: Validates the selection for entering data.
+8. `selectionEntryValidator`: Validates the selection for continuing data entry.
+9. `selectionDisplayValidator`: Validates the selection for displaying data.
+10. `resulter`: Displays the student information in a formatted manner.
 
-### calculateAverage(double homeworkScore, double examScore)
-- Calculates the weighted average of a student's homework and exam scores.
-- Parameters:
-  - `homeworkScore`: The score obtained from homework assignments.
-  - `examScore`: The score obtained from exams.
-- Returns: Weighted average of homework and exam scores.
+### Main Function
 
-### dataGeneration(int numberOfStudents)
-- Generates random student data and writes it to a file named `data.dat`.
-- Parameters:
-  - `numberOfStudents`: The number of students for which data should be generated.
-
-### findLongestName(vector<studentInfo> data)
-- Finds the length of the longest name among the student data.
-- Parameters:
-  - `data`: A vector containing student information.
-- Returns: Length of the longest name.
-
-### findLongestLastname(vector<studentInfo> data)
-- Finds the length of the longest last name among the student data.
-- Parameters:
-  - `data`: A vector containing student information.
-- Returns: Length of the longest last name.
-
-### main()
-- The main function of the program.
-- Reads student data from the `data.dat` file, calculates statistics, and displays the information in a formatted table.
-- Utilizes the other functions defined in the program to accomplish its tasks.
+- Handles the execution flow of the program.
+- Provides options for entering data manually or generating data automatically.
+- Calls appropriate functions based on user selections.
 
 ## Usage
 
-To use this program:
-
-1. Compile the source code file `student_info_management.cpp`.
-2. Run the compiled executable.
-3. Optionally, uncomment the `dataGeneration(100)` call in the `main()` function to generate random student data.
-4. Run the program again to see the results.
+1. Compile the code.
+2. Run the executable.
+3. Follow the prompts to enter or generate student data.
+4. View the results displayed in the specified format.
 
 ## Dependencies
 
 - `iostream`: Standard input/output stream.
-- `fstream`: Input/output stream class to operate on files.
-- `vector`: Standard template library (STL) container for dynamic arrays.
-- `string`: String class for handling strings.
-- `algorithm`: Standard template library (STL) algorithms like `sort`.
-- `ctime`: Standard library for date and time manipulation.
-- `iomanip`: Standard library for manipulating input/output format.
+- `string`: String handling library.
+- `fstream`: File stream for handling file operations.
+- `vector`: Dynamic array implementation for storing student data.
+- `iomanip`: Input/output manipulators for formatting output.
+- `algorithm`: Standard algorithms for operations on sequences.
+- `regex`: Regular expressions for input validation.
 
 ## Notes
 
-- The program generates 100 random student data if the `dataGeneration(100)` call in the `main()` function is uncommented.
-- The `data.dat` file is used to store and retrieve the student data.
-- The program calculates the average and median scores for each student based on their homework and exam scores.
-- The output is displayed in a formatted table showing each student's last name, first name, average score, and median score.
+- The program is interactive and user-friendly, guiding the user through each step of data entry and display.
+- It employs regular expressions for input validation, ensuring data integrity.
+- The output is neatly formatted, providing clear visibility of student information.

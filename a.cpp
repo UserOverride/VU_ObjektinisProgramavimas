@@ -344,6 +344,7 @@ void resulter(vector<studentInfo> allStudentInfo){
 }
 
 int main() {
+
     // ifstream inFile("data.dat");
 
     vector<studentInfo> allStudentInfo;

@@ -5,6 +5,7 @@
         "iomanip": "cpp",
         "regex": "cpp",
         "xstring": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "vector": "cpp"
     }
 }

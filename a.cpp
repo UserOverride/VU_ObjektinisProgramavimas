@@ -212,7 +212,7 @@ int selectionDisplayValidator(){
     while (!inputTrue)
     {
         cout << "How would you like to see the data?" << endl;
-        cout << "1 - Vid(), 2 - yes" << endl;
+        cout << "1 - \"Galutinis(Vid.)\", 2 - \"Galutinis(Med.)\", 3 - \"Galutinis(Vid.) / Galutinis(Med.)\"" << endl;
         regex pat {R"(^([1-2]|3))"};
         string tmp = "";
         getline(cin, tmp);
@@ -227,7 +227,105 @@ int selectionDisplayValidator(){
     }
     return selection;
 }
+void resulter(vector<studentInfo> allStudentInfo){
+    if (allStudentInfo.size() == 0)
+    {
+        cout << "No data was found..." << endl;
+    }else{
+        for (int i = 0; i < allStudentInfo.size(); i++)
+        {
+            allStudentInfo[i].average = calculateAverage(allStudentInfo[i].homeworkScore, allStudentInfo[i].examScore);
+            allStudentInfo[i].averageM = calculateAverage(allStudentInfo[i].median, allStudentInfo[i].examScore);
+        }
+        int longestName = findLongestName(allStudentInfo);
+        int longestLastname = findLongestLastname(allStudentInfo);
+        int selection = selectionDisplayValidator();
+        switch (selection)
+        {
+        case 1:
+            
+            break;
+        case 2:
+            
+            break;
+        case 3:
+            
 
+        cout << "Pavarde";
+        if (longestLastname<10)
+        {
+            cout << "   ";
+        }else{
+            for (int i = 0; i < longestLastname-7+2; i++)
+            {
+                cout << " ";
+            }
+        }
+        
+
+        cout << "Vardas";
+        if (longestName < 9)
+        {
+            cout << "   ";
+        }else{
+            for (int i = 0; i < longestName-6+2; i++)
+            {
+                cout << " ";
+            }
+        }
+        
+        cout << "Galutinis (Vid). / Galutinis (Med).\n";
+        for (int i = 0; i < longestName+2+longestLastname+2; i++)
+        {
+            cout << "-";
+        }
+        cout << "-----------------------------------" << endl;
+    
+        for (int i = 0; i < allStudentInfo.size(); i++)
+        {
+            cout << allStudentInfo[i].lastname;
+            if (longestLastname < 10)
+            {
+                for (int y = 0; y < (10 - allStudentInfo[i].lastname.length()); y++)
+                {
+                    cout << " ";
+                }
+            }else{
+                for (int y = 0; y < (longestLastname - allStudentInfo[i].lastname.length())+2; y++)
+                {
+                    cout << " ";
+                }
+            }
+            
+            cout << allStudentInfo[i].fisrtname;
+            if (longestName < 9)
+            {
+                for (int y = 0; y < (9 - allStudentInfo[i].fisrtname.length()); y++)
+                {
+                    cout << " ";
+                }
+            }else{
+                for (int y = 0; y < (longestName - allStudentInfo[i].fisrtname.length())+2; y++)
+                {
+                    cout << " ";
+                }
+            }
+            
+            
+            if(allStudentInfo[i].average == 10){
+                cout<< fixed << setprecision(2) << allStudentInfo[i].average << "              " << allStudentInfo[i].averageM << endl;
+            }else{
+                cout<< fixed << setprecision(2) << allStudentInfo[i].average << "               " << allStudentInfo[i].averageM << endl;
+            }
+        }
+            break;
+        default:
+            invalidInput();
+            break;
+        }
+    }
+    
+}
 
 int main() {
     ifstream inFile("data.dat");
@@ -240,9 +338,9 @@ int main() {
     switch (selection)
     {
     case 1:
+        allStudentInfo.push_back(singleInputModule());
         while (!doneWithDataEntry)
         {
-            allStudentInfo.push_back(singleInputModule());
             int option = selectionEntryValidator();
             switch (option)
             {
@@ -257,6 +355,7 @@ int main() {
                 break;
             }
         }
+        resulter(allStudentInfo);
         break;
     case 2:
         cout << "Now ready"<<endl;

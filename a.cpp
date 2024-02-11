@@ -2027,9 +2027,14 @@ vector<int> generateGrades(){
     int numberOfGrades = rand() % 200;
     for (int i = 0; i < numberOfGrades+1; i++)
     {
-        grades.push_back((rand() % 10)+1);
+        grades.push_back((rand() % 11));
     }
     return grades;
+}
+
+int generateExamScore(){
+    srand(time(0));
+    return (rand() % 11);
 }
 
 string generateFirstName(){
@@ -2138,6 +2143,7 @@ studentInfo singleInputModule(int selection){
         case 3
             break;
     }
+    
 
     
     switch (selection)
@@ -2220,6 +2226,16 @@ studentInfo singleInputModule(int selection){
             }
             break;
         case 2:
+            vector<int> grades = generateGrades();
+            int examScore = generateExamScore();
+
+            cout<< "Auto generated grades: ";
+            for(int i = 0; i < grades.size(); i++){
+                cout << grades[i] << " ";
+            }
+            cout << endl << "Auto generated exam score: " << examScore << endl;
+
+            newStudentInfo.examScore;
             break;
         case 3
             break;

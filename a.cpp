@@ -2099,6 +2099,7 @@ studentInfo singleInputModule(int selection){
     switch (selection)
     {
         case 1:
+        {
             bool nameValid = false;
             while (!nameValid)
             {
@@ -2119,7 +2120,9 @@ studentInfo singleInputModule(int selection){
                 }
             }
             break;
+        }
         case 2:
+        {
             bool nameValid = false;
             while (!nameValid)
             {
@@ -2140,8 +2143,11 @@ studentInfo singleInputModule(int selection){
                 }
             }
             break;
-        case 3
+        }
+        case 3:
+        {
             break;
+        }
     }
     
 
@@ -2149,6 +2155,7 @@ studentInfo singleInputModule(int selection){
     switch (selection)
     {
         case 1:
+        {
             bool gradesValid = false;
             while (!gradesValid)
             {
@@ -2225,20 +2232,45 @@ studentInfo singleInputModule(int selection){
                 }
             }
             break;
+        }
         case 2:
-            vector<int> grades = generateGrades();
+        {
+            vector<int> generatedGrades = generateGrades();
             int examScore = generateExamScore();
 
             cout<< "Auto generated grades: ";
-            for(int i = 0; i < grades.size(); i++){
-                cout << grades[i] << " ";
+            for(int i = 0; i < generatedGrades.size(); i++){
+                cout << generatedGrades[i] << " ";
             }
             cout << endl << "Auto generated exam score: " << examScore << endl;
 
-            newStudentInfo.examScore;
+            sort(generatedGrades.begin(), generatedGrades.end());
+
+            int homeWorkToalScore = 0;
+            for (int i = 0; i < generatedGrades.size(); i++)
+            {
+                homeWorkToalScore += generatedGrades[i];
+            }
+
+            if (generatedGrades.size() != 0)
+            {
+                newStudentInfo.homeworkScore = (double)homeWorkToalScore/generatedGrades.size();
+            }
+
+            int numberOfHomeWork = generatedGrades.size();
+            if (numberOfHomeWork%2 == 0)
+            {
+                newStudentInfo.median = (generatedGrades[(numberOfHomeWork/2)] + generatedGrades[(numberOfHomeWork/2)-1]) / 2.0;
+            }else{
+                newStudentInfo.median = generatedGrades[(numberOfHomeWork/2)];
+            }
+            newStudentInfo.examScore = examScore;
             break;
-        case 3
+        }
+        case 3:
+        {
             break;
+        }
     }
 
     
@@ -2432,18 +2464,19 @@ int main() {
     cout << "Hello,\nYou will be asked to enter students data.\nPress Enter to Continue.\n";
     cin.ignore();
     int selection = selectionOptionValidator();
-    bool doneWithDataEntry = false;
     switch (selection)
     {
     case 1:
-        allStudentInfo.push_back(singleInputModule());
+    {
+        allStudentInfo.push_back(singleInputModule(selection));
+        bool doneWithDataEntry = false;
         while (!doneWithDataEntry)
         {
             int option = selectionEntryValidator();
             switch (option)
             {
             case 1:
-                allStudentInfo.push_back(singleInputModule());
+                allStudentInfo.push_back(singleInputModule(selection));
                 break;
             case 2:
                 doneWithDataEntry = true;
@@ -2455,18 +2488,45 @@ int main() {
         }
         resulter(allStudentInfo);
         break;
+    }
     case 2:
-        cout << "Not done"<<endl;
+    {
+        allStudentInfo.push_back(singleInputModule(selection));
+        bool doneWithDataEntry = false;
+        while (!doneWithDataEntry)
+        {
+            int option = selectionEntryValidator();
+            switch (option)
+            {
+            case 1:
+                allStudentInfo.push_back(singleInputModule(selection));
+                break;
+            case 2:
+                doneWithDataEntry = true;
+                break;
+            default:
+                invalidInput();
+                break;
+            }
+        }
+        resulter(allStudentInfo);
         break;
+    }
     case 3:
+    {
         cout << "Not done"<<endl;
         break;
+    }
     case 4:
+    {
         cout<< "Ending the program..." << endl <<endl;
         break;
+    }
     default:
+    {
         invalidInput();
         break;
+    }
     }
     
     return 0;

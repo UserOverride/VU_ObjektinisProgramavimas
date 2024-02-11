@@ -2023,7 +2023,6 @@ vector<string> availableLastnames={"Mustill",
 
 vector<int> generateGrades(){
     vector<int> grades;
-    srand(time(0));
     int numberOfGrades = rand() % 200;
     for (int i = 0; i < numberOfGrades+1; i++)
     {
@@ -2033,17 +2032,14 @@ vector<int> generateGrades(){
 }
 
 int generateExamScore(){
-    srand(time(0));
     return (rand() % 11);
 }
 
 string generateFirstName(){
-    srand(time(0));
     return availableNames[rand() % 1000];
 }
 
 string generateLastNames(){
-    srand(time(0));
     return availableLastnames[rand() % 1000];
 }
 
@@ -2146,6 +2142,11 @@ studentInfo singleInputModule(int selection){
         }
         case 3:
         {
+            string firstName = generateFirstName();
+            string lastName = generateLastNames();
+            cout<< "Generated name: " << firstName << " " << lastName << endl;
+            newStudentInfo.fisrtname = firstName;
+            newStudentInfo.lastname = lastName;
             break;
         }
     }
@@ -2242,7 +2243,7 @@ studentInfo singleInputModule(int selection){
             for(int i = 0; i < generatedGrades.size(); i++){
                 cout << generatedGrades[i] << " ";
             }
-            cout << endl << "Auto generated exam score: " << examScore << endl;
+            cout << endl << "Auto generated exam score: " << examScore << endl << endl;
 
             sort(generatedGrades.begin(), generatedGrades.end());
 
@@ -2269,6 +2270,36 @@ studentInfo singleInputModule(int selection){
         }
         case 3:
         {
+            vector<int> generatedGrades = generateGrades();
+            int examScore = generateExamScore();
+
+            cout<< "Auto generated grades: ";
+            for(int i = 0; i < generatedGrades.size(); i++){
+                cout << generatedGrades[i] << " ";
+            }
+            cout << endl << "Auto generated exam score: " << examScore << endl << endl;
+
+            sort(generatedGrades.begin(), generatedGrades.end());
+
+            int homeWorkToalScore = 0;
+            for (int i = 0; i < generatedGrades.size(); i++)
+            {
+                homeWorkToalScore += generatedGrades[i];
+            }
+
+            if (generatedGrades.size() != 0)
+            {
+                newStudentInfo.homeworkScore = (double)homeWorkToalScore/generatedGrades.size();
+            }
+
+            int numberOfHomeWork = generatedGrades.size();
+            if (numberOfHomeWork%2 == 0)
+            {
+                newStudentInfo.median = (generatedGrades[(numberOfHomeWork/2)] + generatedGrades[(numberOfHomeWork/2)-1]) / 2.0;
+            }else{
+                newStudentInfo.median = generatedGrades[(numberOfHomeWork/2)];
+            }
+            newStudentInfo.examScore = examScore;
             break;
         }
     }
@@ -2308,6 +2339,27 @@ int selectionEntryValidator(){
         cout << "Are you done with data entry?" << endl;
         cout << "1 - no, 2 - yes" << endl;
         regex pat {R"(^(1|2))"};
+        string tmp = "";
+        getline(cin, tmp);
+        smatch sm;
+        inputTrue = regex_match(tmp,sm,pat);
+        if (!inputTrue)
+        {
+            invalidInput();
+        }else{
+            selection = stoi(tmp);
+        }
+    }
+    return selection;
+}
+
+int selectionGenerationValidator(){
+    bool inputTrue = false;
+    int selection = 0;
+    while (!inputTrue)
+    {
+        cout << "How many students data should be generated?" << endl;
+        regex pat {R"(^([1-9]|[1-9][0-9]{1,2}|1000))"};
         string tmp = "";
         getline(cin, tmp);
         smatch sm;
@@ -2368,7 +2420,6 @@ void resulter(vector<studentInfo> allStudentInfo){
             }
         }
         
-
         cout << "Vardas";
         if (longestName < 9)
         {
@@ -2459,6 +2510,7 @@ void resulter(vector<studentInfo> allStudentInfo){
 }
 
 int main() {
+    srand(time(0));
 
     vector<studentInfo> allStudentInfo;
     cout << "Hello,\nYou will be asked to enter students data.\nPress Enter to Continue.\n";
@@ -2514,7 +2566,12 @@ int main() {
     }
     case 3:
     {
-        cout << "Not done"<<endl;
+        int numberOfStudentsToGenerate = selectionGenerationValidator();
+        for (int i = 0; i < numberOfStudentsToGenerate; i++)
+        {
+            allStudentInfo.push_back(singleInputModule(selection));
+        }
+        resulter(allStudentInfo);
         break;
     }
     case 4:

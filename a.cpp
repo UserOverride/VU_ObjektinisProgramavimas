@@ -345,7 +345,7 @@ void resulter(vector<studentInfo> allStudentInfo){
 
 int main() {
 
-    // ifstream inFile("data.dat");
+    ifstream inFile("data.dat");
 
     vector<studentInfo> allStudentInfo;
     cout << "Hello,\nYou will be asked to enter students data.\nPress Enter to Continue.\n";

@@ -240,18 +240,8 @@ void resulter(vector<studentInfo> allStudentInfo){
         int longestName = findLongestName(allStudentInfo);
         int longestLastname = findLongestLastname(allStudentInfo);
         int selection = selectionDisplayValidator();
-        switch (selection)
-        {
-        case 1:
-            
-            break;
-        case 2:
-            
-            break;
-        case 3:
-            
 
-        cout << "Pavarde";
+         cout << "Pavarde";
         if (longestLastname<10)
         {
             cout << "   ";
@@ -273,14 +263,36 @@ void resulter(vector<studentInfo> allStudentInfo){
                 cout << " ";
             }
         }
-        
-        cout << "Galutinis (Vid). / Galutinis (Med).\n";
-        for (int i = 0; i < longestName+2+longestLastname+2; i++)
+
+
+        switch (selection)
         {
-            cout << "-";
+        case 1:
+            cout << "Galutinis (Vid).\n";
+            for (int i = 0; i < longestName+2+longestLastname+2; i++)
+            {
+                cout << "-";
+            }
+            cout << "-----------------" << endl;
+            break;
+        case 2:
+            cout << "Galutinis (Med).\n";
+            for (int i = 0; i < longestName+2+longestLastname+2; i++)
+            {
+                cout << "-";
+            }
+            cout << "-----------------" << endl;
+            break;
+        case 3:
+            cout << "Galutinis (Vid). / Galutinis (Med).\n";
+            for (int i = 0; i < longestName+2+longestLastname+2; i++)
+            {
+                cout << "-";
+            }
+            cout << "-----------------------------------" << endl;
+        break;
         }
-        cout << "-----------------------------------" << endl;
-    
+
         for (int i = 0; i < allStudentInfo.size(); i++)
         {
             cout << allStudentInfo[i].lastname;
@@ -311,24 +323,28 @@ void resulter(vector<studentInfo> allStudentInfo){
                 }
             }
             
-            
-            if(allStudentInfo[i].average == 10){
-                cout<< fixed << setprecision(2) << allStudentInfo[i].average << "              " << allStudentInfo[i].averageM << endl;
-            }else{
-                cout<< fixed << setprecision(2) << allStudentInfo[i].average << "               " << allStudentInfo[i].averageM << endl;
+            switch (selection)
+            {
+            case 1:
+                cout<< fixed << setprecision(2) << allStudentInfo[i].average << endl;
+                break;
+            case 2:
+                cout<< fixed << setprecision(2) << allStudentInfo[i].averageM << endl;
+                break;
+            case 3:
+                if(allStudentInfo[i].average == 10){
+                    cout<< fixed << setprecision(2) << allStudentInfo[i].average << "              " << allStudentInfo[i].averageM << endl;
+                }else{
+                    cout<< fixed << setprecision(2) << allStudentInfo[i].average << "               " << allStudentInfo[i].averageM << endl;
+                }
+                break;
             }
-        }
-            break;
-        default:
-            invalidInput();
-            break;
-        }
+        }   
     }
-    
 }
 
 int main() {
-    ifstream inFile("data.dat");
+    // ifstream inFile("data.dat");
 
     vector<studentInfo> allStudentInfo;
     cout << "Hello,\nYou will be asked to enter students data.\nPress Enter to Continue.\n";
@@ -358,10 +374,10 @@ int main() {
         resulter(allStudentInfo);
         break;
     case 2:
-        cout << "Now ready"<<endl;
+        cout << "Not done"<<endl;
         break;
     case 3:
-        cout << "Now ready"<<endl;
+        cout << "Not done"<<endl;
         break;
     case 4:
         cout<< "Ending the program..." << endl <<endl;
@@ -370,85 +386,6 @@ int main() {
         invalidInput();
         break;
     }
-    // while(true)
-    // {
-    
-    //     studentInfo newInformation;
-    //     int numberHomeWork = 0;
-    //     int homeWorkToalScore = 0;
-    //     inFile >> newInformation.name >> newInformation.lastname >> numberHomeWork;
-    //     vector<int> grades;
-    //     for (int i = 0; i < numberHomeWork; i++)
-    //     {
-    //         int tmp;
-    //         inFile >> tmp;
-    //         grades.push_back(tmp);
-    //     }
-        
-    //     sort(grades.begin(), grades.end());
-        
-    //     for (int i = 0; i < grades.size(); i++)
-    //     {
-    //         homeWorkToalScore += grades[i];
-    //     }
-
-    //     if (floor(numberHomeWork) == numberHomeWork)
-    //     {
-    //         newInformation.median = (grades[(numberHomeWork/2)] + grades[(numberHomeWork/2) -1 ]) / 2.0;
-    //     }else{
-    //         newInformation.median = grades[(numberHomeWork/2)+1];
-    //     }
-        
-        
-    //     inFile>> newInformation.examScore;
-    //     if(numberHomeWork > 0){
-    //       newInformation.homeworkScore = (double)homeWorkToalScore/numberHomeWork;
-    //     }else{
-    //       newInformation.homeworkScore = 0;
-    //     }
-    //     newInformation.average = calculateAverage(newInformation.homeworkScore, newInformation.examScore);
-
-    //     studentInfoFromFile.push_back(newInformation);
-    // }
-
-    // int longestName = findLongestName(studentInfoFromFile);
-    // int longestLastname = findLongestLastname(studentInfoFromFile);
-
-    // //add min protection
-    // cout << "Pavarde";
-    // for (int i = 0; i < longestLastname-7+2; i++)
-    // {
-    //     cout << " ";
-    // }
-
-    // cout << "Vardas";
-    // for (int i = 0; i < longestName-6+2; i++)
-    // {
-    //     cout << " ";
-    // }
-
-    // cout << "Galutinis (Vid). / Galutinis (Med).\n";
-    // for (int i = 0; i < longestName+2+longestLastname+2; i++)
-    // {
-    //     cout << "-";
-    // }
-    // cout << "-----------------------------------" << endl;
-    
-    // for (int i = 0; i < studentInfoFromFile.size(); i++)
-    // {
-    //     cout << studentInfoFromFile[i].lastname;
-    //     for (int y = 0; y < (longestLastname - studentInfoFromFile[i].lastname.length())+2; y++)
-    //     {
-    //         cout << " ";
-    //     }
-
-    //     cout << studentInfoFromFile[i].name;
-    //     for (int y = 0; y < (longestName - studentInfoFromFile[i].name.length())+2; y++)
-    //     {
-    //         cout << " ";
-    //     }
-    //     cout<< fixed << setprecision(2) << studentInfoFromFile[i].average << "               " << studentInfoFromFile[i].median << endl;
-    // }
     
     return 0;
 }

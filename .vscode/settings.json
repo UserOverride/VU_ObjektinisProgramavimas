@@ -4,6 +4,7 @@
         "iostream": "cpp",
         "iomanip": "cpp",
         "regex": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "string": "cpp"
     }
 }

@@ -1,22 +1,13 @@
 #include <iostream>
 #include <string>
-#include <fstream>
-#include <vector>
 #include <iomanip>
 #include <algorithm>
 #include <regex>
 
 using namespace std;
 
-struct studentInfo {
-    string fisrtname = "", lastname = "";
-    double homeworkScore = 0, examScore = 0, median = 0, average = 0, averageM = 0;
-};
 
-
-
-
-vector<string> availableNames={
+string availableNames[]={
 "Katti",
 "Lizzie",
 "Rossy",
@@ -1018,7 +1009,7 @@ vector<string> availableNames={
 "Meagan",
 "Lexis"
 };
-vector<string> availableLastnames={"Mustill",
+string availableLastnames[]={"Mustill",
 "Landre",
 "Hazley",
 "Sydney",
@@ -2021,14 +2012,27 @@ vector<string> availableLastnames={"Mustill",
 };
 
 
-vector<int> generateGrades(){
-    vector<int> grades;
+struct studentInfo {
+    string fisrtname = "", lastname = "";
+    double homeworkScore = 0, examScore = 0, median = 0, average = 0, averageM = 0;
+};
+
+struct arrayDataInt{
+    int *array = nullptr;
+    int size = 0;
+};
+
+arrayDataInt generateGrades(){
+    arrayDataInt newStorage;
+    int *grades = new int[201];
     int numberOfGrades = rand() % 200;
     for (int i = 0; i < numberOfGrades+1; i++)
     {
-        grades.push_back((rand() % 11));
+        grades[i] = (rand() % 11);
     }
-    return grades;
+    newStorage.array = grades;
+    newStorage.size = numberOfGrades+1;
+    return newStorage;
 }
 
 int generateExamScore(){
@@ -2057,9 +2061,9 @@ double calculateAverage(double score, double examScore){
     return 0.4 * score + 0.6 * examScore;
 }
 
-int findLongestName(vector<studentInfo> data){
+int findLongestName(studentInfo data[], int size){
     int longestName = 0;
-    for (int i = 0; i < data.size(); i++)
+    for (int i = 0; i < size; i++)
     {
         if (longestName < data[i].fisrtname.length())
         {
@@ -2069,9 +2073,9 @@ int findLongestName(vector<studentInfo> data){
     return longestName;
 }
 
-int findLongestLastname(vector<studentInfo> data){
+int findLongestLastname(studentInfo data[], int size){
     int longestLastname = 0;
-    for (int i = 0; i < data.size(); i++)
+    for (int i = 0; i < size; i++)
     {
         if (longestLastname < data[i].lastname.length())
         {
@@ -2102,7 +2106,7 @@ studentInfo singleInputModule(int selection){
                 regex pat {R"(^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?))"};
                 cout<<"Please enter fullname of the student: "<<endl;
                 string tmp = "";
-                getline(cin, tmp);
+                getline(std::cin, tmp);
                 smatch sm;
                 nameValid = regex_match(tmp,sm,pat);
                 if (!nameValid)
@@ -2125,7 +2129,7 @@ studentInfo singleInputModule(int selection){
                 regex pat {R"(^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?))"};
                 cout<<"Please enter fullname of the student: "<<endl;
                 string tmp = "";
-                getline(cin, tmp);
+                getline(std::cin, tmp);
                 smatch sm;
                 nameValid = regex_match(tmp,sm,pat);
                 if (!nameValid)
@@ -2163,7 +2167,7 @@ studentInfo singleInputModule(int selection){
                 regex pat {R"(^([1-9]|[1-9][0-9]|1[0-9]{2}|200))"};
                 cout<<"Please enter the number of student grades from 1 to 200: "<<endl;
                 string tmp = "";
-                getline(cin, tmp);
+                getline(std::cin, tmp);
                 smatch sm;
                 gradesValid = regex_match(tmp,sm,pat);
                 if (!gradesValid)
@@ -2171,7 +2175,7 @@ studentInfo singleInputModule(int selection){
                     invalidInput();
                 }else
                 {
-                    vector<int> grades;
+                    int grades[201];
                     for (int i = 0; i < stoi(tmp); i++)
                     {
                         cout<<"Please enter the grade number " << i+1 << ": "<<endl;
@@ -2180,31 +2184,30 @@ studentInfo singleInputModule(int selection){
                         while (!singleGradeInvalid)
                         {
                             string tmpSingle = "";
-                            getline(cin, tmpSingle);
+                            getline(std::cin, tmpSingle);
                             smatch sm;
                             singleGradeInvalid = regex_match(tmpSingle,sm,patGrade);
                             if (!singleGradeInvalid)
                             {
                                 invalidInput();
                             }else{
-                                grades.push_back(stoi(tmpSingle));
+                                grades[i] = stoi(tmpSingle);
                             }
                         } 
                     }
 
-                    sort(grades.begin(), grades.end());
+                    sort(grades, grades+stoi(tmp));
 
                     int homeWorkToalScore = 0;
-                    for (int i = 0; i < grades.size(); i++)
+                    for (int i = 0; i < stoi(tmp); i++)
                     {
                         homeWorkToalScore += grades[i];
                     }
 
-                    if (grades.size() != 0)
+                    if (stoi(tmp) != 0)
                     {
-                        newStudentInfo.homeworkScore = (double)homeWorkToalScore/grades.size();
+                        newStudentInfo.homeworkScore = (double)homeWorkToalScore/stoi(tmp);
                     }
-
                     int numberOfHomeWork = stoi(tmp);
                     if (numberOfHomeWork%2 == 0)
                     {
@@ -2221,7 +2224,7 @@ studentInfo singleInputModule(int selection){
                 regex pat {R"(^([0-9]|10))"};
                 cout<<"Please enter the students exam score: "<<endl;
                 string tmp = "";
-                getline(cin, tmp);
+                getline(std::cin, tmp);
                 smatch sm;
                 examScoreValid = regex_match(tmp,sm,pat);
                 if (!examScoreValid)
@@ -2236,78 +2239,79 @@ studentInfo singleInputModule(int selection){
         }
         case 2:
         {
-            vector<int> generatedGrades = generateGrades();
+            arrayDataInt  generatedGrades = generateGrades();
             int examScore = generateExamScore();
 
             cout<< "Auto generated grades: ";
-            for(int i = 0; i < generatedGrades.size(); i++){
-                cout << generatedGrades[i] << " ";
+            for(int i = 0; i < generatedGrades.size; i++){
+                cout << generatedGrades.array[i] << " ";
             }
             cout << endl << "Auto generated exam score: " << examScore << endl << endl;
 
-            sort(generatedGrades.begin(), generatedGrades.end());
+            sort(generatedGrades.array, generatedGrades.array + generatedGrades.size);
 
             int homeWorkToalScore = 0;
-            for (int i = 0; i < generatedGrades.size(); i++)
+            for (int i = 0; i < generatedGrades.size; i++)
             {
-                homeWorkToalScore += generatedGrades[i];
+                homeWorkToalScore += generatedGrades.array[i];
             }
 
-            if (generatedGrades.size() != 0)
+            if (generatedGrades.size != 0)
             {
-                newStudentInfo.homeworkScore = (double)homeWorkToalScore/generatedGrades.size();
+                newStudentInfo.homeworkScore = (double)homeWorkToalScore/generatedGrades.size;
             }
 
-            int numberOfHomeWork = generatedGrades.size();
+            int numberOfHomeWork = generatedGrades.size;
             if (numberOfHomeWork%2 == 0)
             {
-                newStudentInfo.median = (generatedGrades[(numberOfHomeWork/2)] + generatedGrades[(numberOfHomeWork/2)-1]) / 2.0;
+                newStudentInfo.median = (generatedGrades.array[(numberOfHomeWork/2)] + generatedGrades.array[(numberOfHomeWork/2)-1]) / 2.0;
             }else{
-                newStudentInfo.median = generatedGrades[(numberOfHomeWork/2)];
+                newStudentInfo.median = generatedGrades.array[(numberOfHomeWork/2)];
             }
             newStudentInfo.examScore = examScore;
+
+            delete[] generatedGrades.array;
             break;
         }
         case 3:
         {
-            vector<int> generatedGrades = generateGrades();
+            arrayDataInt generatedGrades = generateGrades();
             int examScore = generateExamScore();
 
             cout<< "Auto generated grades: ";
-            for(int i = 0; i < generatedGrades.size(); i++){
-                cout << generatedGrades[i] << " ";
+            for(int i = 0; i < generatedGrades.size; i++){
+                cout << generatedGrades.array[i] << " ";
             }
             cout << endl << "Auto generated exam score: " << examScore << endl << endl;
 
-            sort(generatedGrades.begin(), generatedGrades.end());
+            sort(generatedGrades.array, generatedGrades.array + generatedGrades.size);
 
             int homeWorkToalScore = 0;
-            for (int i = 0; i < generatedGrades.size(); i++)
+            for (int i = 0; i < generatedGrades.size; i++)
             {
-                homeWorkToalScore += generatedGrades[i];
+                homeWorkToalScore += generatedGrades.array[i];
             }
 
-            if (generatedGrades.size() != 0)
+            if (generatedGrades.size != 0)
             {
-                newStudentInfo.homeworkScore = (double)homeWorkToalScore/generatedGrades.size();
+                newStudentInfo.homeworkScore = (double)homeWorkToalScore/generatedGrades.size;
             }
 
-            int numberOfHomeWork = generatedGrades.size();
+            int numberOfHomeWork = generatedGrades.size;
             if (numberOfHomeWork%2 == 0)
             {
-                newStudentInfo.median = (generatedGrades[(numberOfHomeWork/2)] + generatedGrades[(numberOfHomeWork/2)-1]) / 2.0;
+                newStudentInfo.median = (generatedGrades.array[(numberOfHomeWork/2)] + generatedGrades.array[(numberOfHomeWork/2)-1]) / 2.0;
             }else{
-                newStudentInfo.median = generatedGrades[(numberOfHomeWork/2)];
+                newStudentInfo.median = generatedGrades.array[(numberOfHomeWork/2)];
             }
             newStudentInfo.examScore = examScore;
+            delete[] generatedGrades.array;
             break;
         }
     }
-
-    
-            
     return newStudentInfo;
 }
+
 
 int selectionOptionValidator(){
     bool inputTrue = false;
@@ -2318,7 +2322,7 @@ int selectionOptionValidator(){
         cout << "1 - by hand, 2 - generate grades, 3 - generate grades, first and last names, 4 - exit program" << endl;
         regex pat {R"(^([1-3]|4))"};
         string tmp = "";
-        getline(cin, tmp);
+        getline(std::cin, tmp);
         smatch sm;
         inputTrue = regex_match(tmp,sm,pat);
         if (!inputTrue)
@@ -2340,7 +2344,7 @@ int selectionEntryValidator(){
         cout << "1 - no, 2 - yes" << endl;
         regex pat {R"(^(1|2))"};
         string tmp = "";
-        getline(cin, tmp);
+        getline(std::cin, tmp);
         smatch sm;
         inputTrue = regex_match(tmp,sm,pat);
         if (!inputTrue)
@@ -2358,10 +2362,10 @@ int selectionGenerationValidator(){
     int selection = 0;
     while (!inputTrue)
     {
-        cout << "How many students data should be generated?" << endl;
+        cout << "How many students data should be generated? (1-1000)" << endl;
         regex pat {R"(^([1-9]|[1-9][0-9]{1,2}|1000))"};
         string tmp = "";
-        getline(cin, tmp);
+        getline(std::cin, tmp);
         smatch sm;
         inputTrue = regex_match(tmp,sm,pat);
         if (!inputTrue)
@@ -2383,7 +2387,7 @@ int selectionDisplayValidator(){
         cout << "1 - \"Galutinis(Vid.)\", 2 - \"Galutinis(Med.)\", 3 - \"Galutinis(Vid.) / Galutinis(Med.)\"" << endl;
         regex pat {R"(^([1-2]|3))"};
         string tmp = "";
-        getline(cin, tmp);
+        getline(std::cin, tmp);
         smatch sm;
         inputTrue = regex_match(tmp,sm,pat);
         if (!inputTrue)
@@ -2395,18 +2399,18 @@ int selectionDisplayValidator(){
     }
     return selection;
 }
-void resulter(vector<studentInfo> allStudentInfo){
-    if (allStudentInfo.size() == 0)
+void resulter(studentInfo allStudentInfo[], int size){
+    if (size == 0)
     {
         cout << "No data was found..." << endl;
     }else{
-        for (int i = 0; i < allStudentInfo.size(); i++)
+        for (int i = 0; i < size; i++)
         {
             allStudentInfo[i].average = calculateAverage(allStudentInfo[i].homeworkScore, allStudentInfo[i].examScore);
             allStudentInfo[i].averageM = calculateAverage(allStudentInfo[i].median, allStudentInfo[i].examScore);
         }
-        int longestName = findLongestName(allStudentInfo);
-        int longestLastname = findLongestLastname(allStudentInfo);
+        int longestName = findLongestName(allStudentInfo, size);
+        int longestLastname = findLongestLastname(allStudentInfo, size);
         int selection = selectionDisplayValidator();
 
          cout << "Pavarde";
@@ -2459,7 +2463,7 @@ void resulter(vector<studentInfo> allStudentInfo){
         break;
         }
 
-        for (int i = 0; i < allStudentInfo.size(); i++)
+        for (int i = 0; i < size; i++)
         {
             cout << allStudentInfo[i].lastname;
             if (longestLastname < 10)
@@ -2512,15 +2516,17 @@ void resulter(vector<studentInfo> allStudentInfo){
 int main() {
     srand(time(0));
 
-    vector<studentInfo> allStudentInfo;
+    studentInfo allStudentInfo[1001];
     cout << "Hello,\nYou will be asked to enter students data.\nPress Enter to Continue.\n";
     cin.ignore();
     int selection = selectionOptionValidator();
+    int iterator = 0;
     switch (selection)
     {
     case 1:
     {
-        allStudentInfo.push_back(singleInputModule(selection));
+        allStudentInfo[iterator] = singleInputModule(selection);
+        iterator++;
         bool doneWithDataEntry = false;
         while (!doneWithDataEntry)
         {
@@ -2528,7 +2534,8 @@ int main() {
             switch (option)
             {
             case 1:
-                allStudentInfo.push_back(singleInputModule(selection));
+                allStudentInfo[iterator] = singleInputModule(selection);
+                iterator++;
                 break;
             case 2:
                 doneWithDataEntry = true;
@@ -2538,12 +2545,14 @@ int main() {
                 break;
             }
         }
-        resulter(allStudentInfo);
+        resulter(allStudentInfo, iterator);
+        cin.ignore();
         break;
     }
     case 2:
     {
-        allStudentInfo.push_back(singleInputModule(selection));
+        allStudentInfo[iterator] = singleInputModule(selection);
+        iterator++;
         bool doneWithDataEntry = false;
         while (!doneWithDataEntry)
         {
@@ -2551,7 +2560,8 @@ int main() {
             switch (option)
             {
             case 1:
-                allStudentInfo.push_back(singleInputModule(selection));
+                allStudentInfo[iterator] = singleInputModule(selection);
+                iterator++;
                 break;
             case 2:
                 doneWithDataEntry = true;
@@ -2561,7 +2571,8 @@ int main() {
                 break;
             }
         }
-        resulter(allStudentInfo);
+        resulter(allStudentInfo, iterator);
+        cin.ignore();
         break;
     }
     case 3:
@@ -2569,9 +2580,11 @@ int main() {
         int numberOfStudentsToGenerate = selectionGenerationValidator();
         for (int i = 0; i < numberOfStudentsToGenerate; i++)
         {
-            allStudentInfo.push_back(singleInputModule(selection));
+            allStudentInfo[iterator] = singleInputModule(selection);
+            iterator++;
         }
-        resulter(allStudentInfo);
+        resulter(allStudentInfo, iterator);
+        cin.ignore();
         break;
     }
     case 4:

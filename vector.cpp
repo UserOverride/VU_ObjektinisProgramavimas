@@ -2245,7 +2245,6 @@ studentInfo singleInputModule(int selection){
             while (!areWeDone)
             {
                 cout<<"Please enter the grade number " << i+1 << ": "<<endl;
-                i++;
                 regex patGrade {R"(^([0-9]|10))"};
                 bool singleGradeInvalid = false;
                 while (!singleGradeInvalid)
@@ -2259,6 +2258,7 @@ studentInfo singleInputModule(int selection){
                         invalidInput();
                     }else{
                         grades.push_back(stoi(tmpSingle));
+                        i++;
                     }
                 } 
                 if (selectionEntryValidator() == 2){

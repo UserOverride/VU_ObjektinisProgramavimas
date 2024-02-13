@@ -2048,13 +2048,13 @@ string generateLastNames(){
 }
 
 void singleSutdentInfoPrinter(studentInfo studentInfoToBePrinted){
-    cout<<"Fisrtname: "<<studentInfoToBePrinted.fisrtname<<endl;
-    cout<<"lastname: "<<studentInfoToBePrinted.lastname<<endl;
-    cout<<"homeworkScore: "<<studentInfoToBePrinted.homeworkScore<<endl;
-    cout<<"examScore: "<<studentInfoToBePrinted.examScore<<endl;
-    cout<<"median: "<<studentInfoToBePrinted.median<<endl;
-    cout<<"average: "<<studentInfoToBePrinted.average<<endl;
-    cout<<"averageM: "<<studentInfoToBePrinted.averageM<<endl;
+    std::cout<<"Fisrtname: "<<studentInfoToBePrinted.fisrtname<<endl;
+    std::cout<<"lastname: "<<studentInfoToBePrinted.lastname<<endl;
+    std::cout<<"homeworkScore: "<<studentInfoToBePrinted.homeworkScore<<endl;
+    std::cout<<"examScore: "<<studentInfoToBePrinted.examScore<<endl;
+    std::cout<<"median: "<<studentInfoToBePrinted.median<<endl;
+    std::cout<<"average: "<<studentInfoToBePrinted.average<<endl;
+    std::cout<<"averageM: "<<studentInfoToBePrinted.averageM<<endl;
 }
 
 double calculateAverage(double score, double examScore){
@@ -2086,10 +2086,98 @@ int findLongestLastname(studentInfo data[], int size){
 }
 
 void invalidInput(){
-    cout<<"-----------------------------------" << endl;
-    cout<<"           Invalid Input           " << endl;
-    cout<<"-----------------------------------" << endl << endl;
+    std::cout<<"-----------------------------------" << endl;
+    std::cout<<"           Invalid Input           " << endl;
+    std::cout<<"-----------------------------------" << endl << endl;
 
+}
+
+
+int selectionOptionValidator(){
+    bool inputTrue = false;
+    int selection = 0;
+    while (!inputTrue)
+    {
+        std::cout << "How would you like to enter data?" << endl;
+        std::cout << "1 - by hand, 2 - generate grades, 3 - generate grades, first and last names, 4 - exit program" << endl;
+        regex pat {R"(^([1-3]|4))"};
+        string tmp = "";
+        getline(std::cin, tmp);
+        smatch sm;
+        inputTrue = regex_match(tmp,sm,pat);
+        if (!inputTrue)
+        {
+            invalidInput();
+        }else{
+            selection = stoi(tmp);
+        }
+    }
+    return selection;
+}
+
+int selectionEntryValidator(){
+    bool inputTrue = false;
+    int selection = 0;
+    while (!inputTrue)
+    {
+        std::cout << "Are you done with data entry?" << endl;
+        std::cout << "1 - no, 2 - yes" << endl;
+        regex pat {R"(^(1|2))"};
+        string tmp = "";
+        getline(std::cin, tmp);
+        smatch sm;
+        inputTrue = regex_match(tmp,sm,pat);
+        if (!inputTrue)
+        {
+            invalidInput();
+        }else{
+            selection = stoi(tmp);
+        }
+    }
+    return selection;
+}
+
+int selectionGenerationValidator(){
+    bool inputTrue = false;
+    int selection = 0;
+    while (!inputTrue)
+    {
+        std::cout << "How many students data should be generated? (1-1000)" << endl;
+        regex pat {R"(^([1-9]|[1-9][0-9]{1,2}|1000))"};
+        string tmp = "";
+        getline(std::cin, tmp);
+        smatch sm;
+        inputTrue = regex_match(tmp,sm,pat);
+        if (!inputTrue)
+        {
+            invalidInput();
+        }else{
+            selection = stoi(tmp);
+        }
+    }
+    return selection;
+}
+
+int selectionDisplayValidator(){
+    bool inputTrue = false;
+    int selection = 0;
+    while (!inputTrue)
+    {
+        std::cout << endl << "How would you like to see the data?" << endl;
+        std::cout << "1 - \"Galutinis(Vid.)\", 2 - \"Galutinis(Med.)\", 3 - \"Galutinis(Vid.) / Galutinis(Med.)\"" << endl;
+        regex pat {R"(^([1-2]|3))"};
+        string tmp = "";
+        getline(std::cin, tmp);
+        smatch sm;
+        inputTrue = regex_match(tmp,sm,pat);
+        if (!inputTrue)
+        {
+            invalidInput();
+        }else{
+            selection = stoi(tmp);
+        }
+    }
+    return selection;
 }
 
 studentInfo singleInputModule(int selection){
@@ -2104,7 +2192,7 @@ studentInfo singleInputModule(int selection){
             while (!nameValid)
             {
                 regex pat {R"(^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?))"};
-                cout<<"Please enter fullname of the student: "<<endl;
+                std::cout<<"Please enter fullname of the student: "<<endl;
                 string tmp = "";
                 getline(std::cin, tmp);
                 smatch sm;
@@ -2127,7 +2215,7 @@ studentInfo singleInputModule(int selection){
             while (!nameValid)
             {
                 regex pat {R"(^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?))"};
-                cout<<"Please enter fullname of the student: "<<endl;
+                std::cout<<"Please enter fullname of the student: "<<endl;
                 string tmp = "";
                 getline(std::cin, tmp);
                 smatch sm;
@@ -2148,7 +2236,7 @@ studentInfo singleInputModule(int selection){
         {
             string firstName = generateFirstName();
             string lastName = generateLastNames();
-            cout<< "Generated name: " << firstName << " " << lastName << endl;
+            std::cout<< "Generated name: " << firstName << " " << lastName << endl;
             newStudentInfo.fisrtname = firstName;
             newStudentInfo.lastname = lastName;
             break;
@@ -2161,79 +2249,67 @@ studentInfo singleInputModule(int selection){
     {
         case 1:
         {
-            bool gradesValid = false;
-            while (!gradesValid)
-            {
-                regex pat {R"(^([1-9]|[1-9][0-9]|1[0-9]{2}|200))"};
-                cout<<"Please enter the number of student grades from 1 to 200: "<<endl;
-                string tmp = "";
-                getline(std::cin, tmp);
+            int grades[201];
+            int xr = 0;
+            bool areWeDone = false;
+            while (!areWeDone) {
+            if (xr == 200) {
+                areWeDone = true;
+            } else {
+
+                std::cout << "Please enter the grade number " << xr + 1 << ": " << endl;
+                regex patGrade {R"(^([0-9]|10))"};
+                bool singleGradeInvalid = false;
+                while (!singleGradeInvalid) {
+
+                string tmpSingle = "";
+                getline(std::cin, tmpSingle);
                 smatch sm;
-                gradesValid = regex_match(tmp,sm,pat);
-                if (!gradesValid)
-                {
+                singleGradeInvalid = regex_match(tmpSingle, sm, patGrade);
+                if (!singleGradeInvalid) {
                     invalidInput();
-                }else
-                {
-                    int grades[201];
-                    for (int i = 0; i < stoi(tmp); i++)
-                    {
-                        cout<<"Please enter the grade number " << i+1 << ": "<<endl;
-                        regex patGrade {R"(^([0-9]|10))"};
-                        bool singleGradeInvalid = false;
-                        while (!singleGradeInvalid)
-                        {
-                            string tmpSingle = "";
-                            getline(std::cin, tmpSingle);
-                            smatch sm;
-                            singleGradeInvalid = regex_match(tmpSingle,sm,patGrade);
-                            if (!singleGradeInvalid)
-                            {
-                                invalidInput();
-                            }else{
-                                grades[i] = stoi(tmpSingle);
-                            }
-                        } 
-                    }
-
-                    sort(grades, grades+stoi(tmp));
-
-                    int homeWorkToalScore = 0;
-                    for (int i = 0; i < stoi(tmp); i++)
-                    {
-                        homeWorkToalScore += grades[i];
-                    }
-
-                    if (stoi(tmp) != 0)
-                    {
-                        newStudentInfo.homeworkScore = (double)homeWorkToalScore/stoi(tmp);
-                    }
-                    int numberOfHomeWork = stoi(tmp);
-                    if (numberOfHomeWork%2 == 0)
-                    {
-                        newStudentInfo.median = (grades[(numberOfHomeWork/2)] + grades[(numberOfHomeWork/2)-1]) / 2.0;
-                    }else{
-                        newStudentInfo.median = grades[(numberOfHomeWork/2)];
-                    }
+                } else {
+                    grades[xr] = stoi(tmpSingle);
+                    xr++;
                 }
+
+                }
+                if (selectionEntryValidator() == 2) {
+                areWeDone = true;
+                }
+            }
+            }
+
+            sort(grades, grades + xr);
+
+            int homeWorkToalScore = 0;
+            for (int i = 0; i < xr; i++) {
+            homeWorkToalScore += grades[i];
+            }
+
+            if (xr != 0) {
+            newStudentInfo.homeworkScore = (double) homeWorkToalScore / xr;
+            }
+            int numberOfHomeWork = xr;
+            if (numberOfHomeWork % 2 == 0) {
+            newStudentInfo.median = (grades[(numberOfHomeWork / 2)] + grades[(numberOfHomeWork / 2) - 1]) / 2.0;
+            } else {
+            newStudentInfo.median = grades[(numberOfHomeWork / 2)];
             }
 
             bool examScoreValid = false;
-            while (!examScoreValid)
-            {
-                regex pat {R"(^([0-9]|10))"};
-                cout<<"Please enter the students exam score: "<<endl;
-                string tmp = "";
-                getline(std::cin, tmp);
-                smatch sm;
-                examScoreValid = regex_match(tmp,sm,pat);
-                if (!examScoreValid)
-                {
-                    invalidInput();
-                }else
-                {
-                    newStudentInfo.examScore = stoi(tmp);
-                }
+            while (!examScoreValid) {
+            regex pat {R"(^([0-9]|10))"};
+            std::cout << "Please enter the students exam score: " << endl;
+            string tmp = "";
+            getline(std::cin, tmp);
+            smatch sm;
+            examScoreValid = regex_match(tmp, sm, pat);
+            if (!examScoreValid) {
+                invalidInput();
+            } else {
+                newStudentInfo.examScore = stoi(tmp);
+            }
             }
             break;
         }
@@ -2242,11 +2318,11 @@ studentInfo singleInputModule(int selection){
             arrayDataInt  generatedGrades = generateGrades();
             int examScore = generateExamScore();
 
-            cout<< "Auto generated grades: ";
+            std::cout<< "Auto generated grades: ";
             for(int i = 0; i < generatedGrades.size; i++){
-                cout << generatedGrades.array[i] << " ";
+                std::cout << generatedGrades.array[i] << " ";
             }
-            cout << endl << "Auto generated exam score: " << examScore << endl << endl;
+            std::cout << endl << "Auto generated exam score: " << examScore << endl << endl;
 
             sort(generatedGrades.array, generatedGrades.array + generatedGrades.size);
 
@@ -2278,11 +2354,11 @@ studentInfo singleInputModule(int selection){
             arrayDataInt generatedGrades = generateGrades();
             int examScore = generateExamScore();
 
-            cout<< "Auto generated grades: ";
+            std::cout<< "Auto generated grades: ";
             for(int i = 0; i < generatedGrades.size; i++){
-                cout << generatedGrades.array[i] << " ";
+                std::cout << generatedGrades.array[i] << " ";
             }
-            cout << endl << "Auto generated exam score: " << examScore << endl << endl;
+            std::cout << endl << "Auto generated exam score: " << examScore << endl << endl;
 
             sort(generatedGrades.array, generatedGrades.array + generatedGrades.size);
 
@@ -2312,97 +2388,10 @@ studentInfo singleInputModule(int selection){
     return newStudentInfo;
 }
 
-
-int selectionOptionValidator(){
-    bool inputTrue = false;
-    int selection = 0;
-    while (!inputTrue)
-    {
-        cout << "How would you like to enter data?" << endl;
-        cout << "1 - by hand, 2 - generate grades, 3 - generate grades, first and last names, 4 - exit program" << endl;
-        regex pat {R"(^([1-3]|4))"};
-        string tmp = "";
-        getline(std::cin, tmp);
-        smatch sm;
-        inputTrue = regex_match(tmp,sm,pat);
-        if (!inputTrue)
-        {
-            invalidInput();
-        }else{
-            selection = stoi(tmp);
-        }
-    }
-    return selection;
-}
-
-int selectionEntryValidator(){
-    bool inputTrue = false;
-    int selection = 0;
-    while (!inputTrue)
-    {
-        cout << "Are you done with data entry?" << endl;
-        cout << "1 - no, 2 - yes" << endl;
-        regex pat {R"(^(1|2))"};
-        string tmp = "";
-        getline(std::cin, tmp);
-        smatch sm;
-        inputTrue = regex_match(tmp,sm,pat);
-        if (!inputTrue)
-        {
-            invalidInput();
-        }else{
-            selection = stoi(tmp);
-        }
-    }
-    return selection;
-}
-
-int selectionGenerationValidator(){
-    bool inputTrue = false;
-    int selection = 0;
-    while (!inputTrue)
-    {
-        cout << "How many students data should be generated? (1-1000)" << endl;
-        regex pat {R"(^([1-9]|[1-9][0-9]{1,2}|1000))"};
-        string tmp = "";
-        getline(std::cin, tmp);
-        smatch sm;
-        inputTrue = regex_match(tmp,sm,pat);
-        if (!inputTrue)
-        {
-            invalidInput();
-        }else{
-            selection = stoi(tmp);
-        }
-    }
-    return selection;
-}
-
-int selectionDisplayValidator(){
-    bool inputTrue = false;
-    int selection = 0;
-    while (!inputTrue)
-    {
-        cout << endl << "How would you like to see the data?" << endl;
-        cout << "1 - \"Galutinis(Vid.)\", 2 - \"Galutinis(Med.)\", 3 - \"Galutinis(Vid.) / Galutinis(Med.)\"" << endl;
-        regex pat {R"(^([1-2]|3))"};
-        string tmp = "";
-        getline(std::cin, tmp);
-        smatch sm;
-        inputTrue = regex_match(tmp,sm,pat);
-        if (!inputTrue)
-        {
-            invalidInput();
-        }else{
-            selection = stoi(tmp);
-        }
-    }
-    return selection;
-}
 void resulter(studentInfo allStudentInfo[], int size){
     if (size == 0)
     {
-        cout << "No data was found..." << endl;
+        std::cout << "No data was found..." << endl;
     }else{
         for (int i = 0; i < size; i++)
         {
@@ -2413,99 +2402,99 @@ void resulter(studentInfo allStudentInfo[], int size){
         int longestLastname = findLongestLastname(allStudentInfo, size);
         int selection = selectionDisplayValidator();
 
-         cout << "Pavarde";
+         std::cout << "Pavarde";
         if (longestLastname<10)
         {
-            cout << "   ";
+            std::cout << "   ";
         }else{
             for (int i = 0; i < longestLastname-7+2; i++)
             {
-                cout << " ";
+                std::cout << " ";
             }
         }
         
-        cout << "Vardas";
+        std::cout << "Vardas";
         if (longestName < 9)
         {
-            cout << "   ";
+            std::cout << "   ";
         }else{
             for (int i = 0; i < longestName-6+2; i++)
             {
-                cout << " ";
+                std::cout << " ";
             }
         }
 
         switch (selection)
         {
         case 1:
-            cout << "Galutinis (Vid).\n";
+            std::cout << "Galutinis (Vid).\n";
             for (int i = 0; i < longestName+2+longestLastname+2; i++)
             {
-                cout << "-";
+                std::cout << "-";
             }
-            cout << "-----------------" << endl;
+            std::cout << "-----------------" << endl;
             break;
         case 2:
-            cout << "Galutinis (Med).\n";
+            std::cout << "Galutinis (Med).\n";
             for (int i = 0; i < longestName+2+longestLastname+2; i++)
             {
-                cout << "-";
+                std::cout << "-";
             }
-            cout << "-----------------" << endl;
+            std::cout << "-----------------" << endl;
             break;
         case 3:
-            cout << "Galutinis (Vid). / Galutinis (Med).\n";
+            std::cout << "Galutinis (Vid). / Galutinis (Med).\n";
             for (int i = 0; i < longestName+2+longestLastname+2; i++)
             {
-                cout << "-";
+                std::cout << "-";
             }
-            cout << "-----------------------------------" << endl;
+            std::cout << "-----------------------------------" << endl;
         break;
         }
 
         for (int i = 0; i < size; i++)
         {
-            cout << allStudentInfo[i].lastname;
+            std::cout << allStudentInfo[i].lastname;
             if (longestLastname < 10)
             {
                 for (int y = 0; y < (10 - allStudentInfo[i].lastname.length()); y++)
                 {
-                    cout << " ";
+                    std::cout << " ";
                 }
             }else{
                 for (int y = 0; y < (longestLastname - allStudentInfo[i].lastname.length())+2; y++)
                 {
-                    cout << " ";
+                    std::cout << " ";
                 }
             }
             
-            cout << allStudentInfo[i].fisrtname;
+            std::cout << allStudentInfo[i].fisrtname;
             if (longestName < 9)
             {
                 for (int y = 0; y < (9 - allStudentInfo[i].fisrtname.length()); y++)
                 {
-                    cout << " ";
+                    std::cout << " ";
                 }
             }else{
                 for (int y = 0; y < (longestName - allStudentInfo[i].fisrtname.length())+2; y++)
                 {
-                    cout << " ";
+                    std::cout << " ";
                 }
             }
             
             switch (selection)
             {
             case 1:
-                cout<< fixed << setprecision(2) << allStudentInfo[i].average << endl;
+                std::cout<< fixed << setprecision(2) << allStudentInfo[i].average << endl;
                 break;
             case 2:
-                cout<< fixed << setprecision(2) << allStudentInfo[i].averageM << endl;
+                std::cout<< fixed << setprecision(2) << allStudentInfo[i].averageM << endl;
                 break;
             case 3:
                 if(allStudentInfo[i].average == 10){
-                    cout<< fixed << setprecision(2) << allStudentInfo[i].average << "              " << allStudentInfo[i].averageM << endl;
+                    std::cout<< fixed << setprecision(2) << allStudentInfo[i].average << "              " << allStudentInfo[i].averageM << endl;
                 }else{
-                    cout<< fixed << setprecision(2) << allStudentInfo[i].average << "               " << allStudentInfo[i].averageM << endl;
+                    std::cout<< fixed << setprecision(2) << allStudentInfo[i].average << "               " << allStudentInfo[i].averageM << endl;
                 }
                 break;
             }
@@ -2517,88 +2506,102 @@ int main() {
     srand(time(0));
 
     studentInfo allStudentInfo[1001];
-    cout << "Hello,\nYou will be asked to enter students data.\nPress Enter to Continue.\n";
+    std::cout << "Hello,\nYou will be asked to enter students data.\nPress Enter to Continue.\n";
     cin.ignore();
-    int selection = selectionOptionValidator();
-    int iterator = 0;
-    switch (selection)
+    bool notDone = true;
+    while (notDone)
     {
-    case 1:
-    {
-        allStudentInfo[iterator] = singleInputModule(selection);
-        iterator++;
-        bool doneWithDataEntry = false;
-        while (!doneWithDataEntry)
+        int selection = selectionOptionValidator();
+        int iterator = 0;
+        switch (selection)
         {
-            int option = selectionEntryValidator();
-            switch (option)
-            {
-            case 1:
-                allStudentInfo[iterator] = singleInputModule(selection);
-                iterator++;
-                break;
-            case 2:
-                doneWithDataEntry = true;
-                break;
-            default:
-                invalidInput();
-                break;
-            }
-        }
-        resulter(allStudentInfo, iterator);
-        cin.ignore();
-        break;
-    }
-    case 2:
-    {
-        allStudentInfo[iterator] = singleInputModule(selection);
-        iterator++;
-        bool doneWithDataEntry = false;
-        while (!doneWithDataEntry)
-        {
-            int option = selectionEntryValidator();
-            switch (option)
-            {
-            case 1:
-                allStudentInfo[iterator] = singleInputModule(selection);
-                iterator++;
-                break;
-            case 2:
-                doneWithDataEntry = true;
-                break;
-            default:
-                invalidInput();
-                break;
-            }
-        }
-        resulter(allStudentInfo, iterator);
-        cin.ignore();
-        break;
-    }
-    case 3:
-    {
-        int numberOfStudentsToGenerate = selectionGenerationValidator();
-        for (int i = 0; i < numberOfStudentsToGenerate; i++)
+        case 1:
         {
             allStudentInfo[iterator] = singleInputModule(selection);
             iterator++;
+            bool doneWithDataEntry = false;
+            while (!doneWithDataEntry)
+            {
+                int option = selectionEntryValidator();
+                switch (option)
+                {
+                case 1:
+                    if (iterator == 1000)
+                    {
+                        doneWithDataEntry = true;
+                    }else{
+                        allStudentInfo[iterator] = singleInputModule(selection);
+                        iterator++;
+                    }
+                    break;
+                case 2:
+                    doneWithDataEntry = true;
+                    break;
+                default:
+                    invalidInput();
+                    break;
+                }
+            }
+            resulter(allStudentInfo, iterator);
+            std::cout << endl << endl;
+            break;
         }
-        resulter(allStudentInfo, iterator);
-        cin.ignore();
-        break;
+        case 2:
+        {
+            allStudentInfo[iterator] = singleInputModule(selection);
+            iterator++;
+            bool doneWithDataEntry = false;
+            while (!doneWithDataEntry)
+            {
+                int option = selectionEntryValidator();
+                switch (option)
+                {
+                case 1:
+                    if (iterator == 1000)
+                    {
+                        doneWithDataEntry = true;
+                    }else{
+                        allStudentInfo[iterator] = singleInputModule(selection);
+                        iterator++;
+                    }                    
+                    break;
+                case 2:
+                    doneWithDataEntry = true;
+                    break;
+                default:
+                    invalidInput();
+                    break;
+                }
+            }
+            resulter(allStudentInfo, iterator);
+            std::cout << endl << endl;
+            break;
+        }
+        case 3:
+        {
+            int numberOfStudentsToGenerate = selectionGenerationValidator();
+            for (int i = 0; i < numberOfStudentsToGenerate; i++)
+            {
+                allStudentInfo[iterator] = singleInputModule(selection);
+                iterator++;
+            }
+            resulter(allStudentInfo, iterator);
+            std::cout << endl << endl;
+            break;
+        }
+        case 4:
+        {
+            std::cout<< "Ending the program..." << endl <<endl;
+            notDone = false;
+            break;
+        }
+        default:
+        {
+            invalidInput();
+            break;
+        }
+        }
     }
-    case 4:
-    {
-        cout<< "Ending the program..." << endl <<endl;
-        break;
-    }
-    default:
-    {
-        invalidInput();
-        break;
-    }
-    }
-    
     return 0;
 }
 

@@ -2022,6 +2022,36 @@ struct arrayDataInt{
     int size = 0;
 };
 
+
+int *createNewArray(int size){
+    return new int[size+1];
+}
+
+int *copyData(int *arrayOne, int *arrayTwo, int size, int newVal){
+    for (int i = 0; i < size; i++)
+    {
+        arrayTwo[i] = arrayOne[i];
+    }
+    arrayTwo[size] = newVal;
+    delete[] arrayOne;
+    return arrayTwo;
+}
+
+studentInfo *createNewArray(int size, int bugFix){
+    return new studentInfo[size+1];
+}
+
+studentInfo *copyData(studentInfo *arrayOne, studentInfo *arrayTwo, int size, studentInfo newVal){
+    for (int i = 0; i < size; i++)
+    {
+        arrayTwo[i] = arrayOne[i];
+    }
+    arrayTwo[size] = newVal;
+    delete[] arrayOne;
+    return arrayTwo;
+}
+
+
 arrayDataInt generateGrades(){
     arrayDataInt newStorage;
     int *grades = new int[201];
@@ -2249,14 +2279,10 @@ studentInfo singleInputModule(int selection){
     {
         case 1:
         {
-            int grades[201];
+            int *gradesLocation = createNewArray(0);
             int xr = 0;
             bool areWeDone = false;
             while (!areWeDone) {
-            if (xr == 200) {
-                areWeDone = true;
-            } else {
-
                 std::cout << "Please enter the grade number " << xr + 1 << ": " << endl;
                 regex patGrade {R"(^([0-9]|10))"};
                 bool singleGradeInvalid = false;
@@ -2269,7 +2295,7 @@ studentInfo singleInputModule(int selection){
                 if (!singleGradeInvalid) {
                     invalidInput();
                 } else {
-                    grades[xr] = stoi(tmpSingle);
+                    gradesLocation = copyData(gradesLocation, createNewArray(xr), xr, stoi(tmpSingle));
                     xr++;
                 }
 
@@ -2277,14 +2303,14 @@ studentInfo singleInputModule(int selection){
                 if (selectionEntryValidator() == 2) {
                 areWeDone = true;
                 }
-            }
+            
             }
 
-            sort(grades, grades + xr);
+            sort(gradesLocation, gradesLocation + xr);
 
             int homeWorkToalScore = 0;
             for (int i = 0; i < xr; i++) {
-            homeWorkToalScore += grades[i];
+            homeWorkToalScore += gradesLocation[i];
             }
 
             if (xr != 0) {
@@ -2292,9 +2318,9 @@ studentInfo singleInputModule(int selection){
             }
             int numberOfHomeWork = xr;
             if (numberOfHomeWork % 2 == 0) {
-            newStudentInfo.median = (grades[(numberOfHomeWork / 2)] + grades[(numberOfHomeWork / 2) - 1]) / 2.0;
+            newStudentInfo.median = (gradesLocation[(numberOfHomeWork / 2)] + gradesLocation[(numberOfHomeWork / 2) - 1]) / 2.0;
             } else {
-            newStudentInfo.median = grades[(numberOfHomeWork / 2)];
+            newStudentInfo.median = gradesLocation[(numberOfHomeWork / 2)];
             }
 
             bool examScoreValid = false;
@@ -2505,7 +2531,7 @@ void resulter(studentInfo allStudentInfo[], int size){
 int main() {
     srand(time(0));
 
-    studentInfo allStudentInfo[1001];
+    studentInfo *allStudentInfo = createNewArray(0, 0);
     std::cout << "Hello,\nYou will be asked to enter students data.\nPress Enter to Continue.\n";
     cin.ignore();
     bool notDone = true;
@@ -2517,7 +2543,7 @@ int main() {
         {
         case 1:
         {
-            allStudentInfo[iterator] = singleInputModule(selection);
+            allStudentInfo = copyData(allStudentInfo, createNewArray(iterator, 0), iterator, singleInputModule(selection));
             iterator++;
             bool doneWithDataEntry = false;
             while (!doneWithDataEntry)
@@ -2530,7 +2556,7 @@ int main() {
                     {
                         doneWithDataEntry = true;
                     }else{
-                        allStudentInfo[iterator] = singleInputModule(selection);
+                        allStudentInfo = copyData(allStudentInfo, createNewArray(iterator, 0), iterator, singleInputModule(selection));
                         iterator++;
                     }
                     break;
@@ -2548,7 +2574,7 @@ int main() {
         }
         case 2:
         {
-            allStudentInfo[iterator] = singleInputModule(selection);
+            allStudentInfo = copyData(allStudentInfo, createNewArray(iterator, 0), iterator, singleInputModule(selection));
             iterator++;
             bool doneWithDataEntry = false;
             while (!doneWithDataEntry)
@@ -2561,7 +2587,7 @@ int main() {
                     {
                         doneWithDataEntry = true;
                     }else{
-                        allStudentInfo[iterator] = singleInputModule(selection);
+                        allStudentInfo = copyData(allStudentInfo, createNewArray(iterator, 0), iterator, singleInputModule(selection));
                         iterator++;
                     }                    
                     break;
@@ -2582,7 +2608,7 @@ int main() {
             int numberOfStudentsToGenerate = selectionGenerationValidator();
             for (int i = 0; i < numberOfStudentsToGenerate; i++)
             {
-                allStudentInfo[iterator] = singleInputModule(selection);
+                allStudentInfo = copyData(allStudentInfo, createNewArray(iterator, 0), iterator, singleInputModule(selection));
                 iterator++;
             }
             resulter(allStudentInfo, iterator);
@@ -2602,6 +2628,7 @@ int main() {
         }
         }
     }
+    delete[] allStudentInfo;
     return 0;
 }
 

@@ -2039,6 +2039,51 @@ string generateLastNames(){
     return availableLastnames[rand() % 1000];
 }
 
+bool compareFisrtName(const studentInfo &a, const studentInfo &b)
+{
+    return a.fisrtname < b.fisrtname;
+}
+
+bool compareLastName(const studentInfo &a, const studentInfo &b)
+{
+    return a.lastname < b.lastname;
+}
+
+bool compareLastVid(const studentInfo &a, const studentInfo &b)
+{
+    return a.average < b.average;
+}
+
+bool compareLastMed(const studentInfo &a, const studentInfo &b)
+{
+    return a.averageM < b.averageM;
+}
+
+vector<studentInfo> sortingAlgo(int selection, vector<studentInfo> data){
+    switch (selection)
+    {
+    case 1:
+        sort(data.begin(), data.end(), compareFisrtName);
+        return data;
+        break;
+    case 2:
+        sort(data.begin(), data.end(), compareLastName);
+        return data;
+        break;
+    case 3:
+        sort(data.begin(), data.end(), compareLastVid);
+        return data;
+        break;
+    case 4:
+        sort(data.begin(), data.end(), compareLastMed);
+        return data;
+        break;
+    default:
+        return data;
+        break;
+    }
+}
+
 void singleSutdentInfoPrinter(studentInfo studentInfoToBePrinted){
     cout<<"Fisrtname: "<<studentInfoToBePrinted.fisrtname<<endl;
     cout<<"lastname: "<<studentInfoToBePrinted.lastname<<endl;
@@ -2091,6 +2136,28 @@ int selectionOptionValidator(){
     {
         cout << "How would you like to enter data?" << endl;
         cout << "1 - by hand, 2 - generate grades, 3 - generate grades, first and last names, 4 - read from file, 5 - exit program" << endl;
+        regex pat {R"(^([1-4]|5))"};
+        string tmp = "";
+        getline(cin, tmp);
+        smatch sm;
+        inputTrue = regex_match(tmp,sm,pat);
+        if (!inputTrue)
+        {
+            invalidInput();
+        }else{
+            selection = stoi(tmp);
+        }
+    }
+    return selection;
+}
+
+int selectionSortingValidator(){
+    bool inputTrue = false;
+    int selection = 0;
+    while (!inputTrue)
+    {
+        cout << "How would you like the data to be sorted?" << endl;
+        cout << "1 - by firstname, 2 - by lastname, 3 - by last average score, 4 - by last average median score, 5 - do not sort" << endl;
         regex pat {R"(^([1-4]|5))"};
         string tmp = "";
         getline(cin, tmp);
@@ -2414,6 +2481,7 @@ void resulter(vector<studentInfo> allStudentInfo){
             allStudentInfo[i].average = calculateAverage(allStudentInfo[i].homeworkScore, allStudentInfo[i].examScore);
             allStudentInfo[i].averageM = calculateAverage(allStudentInfo[i].median, allStudentInfo[i].examScore);
         }
+        allStudentInfo = sortingAlgo(selectionSortingValidator(), allStudentInfo);
         int longestName = findLongestName(allStudentInfo);
         int longestLastname = findLongestLastname(allStudentInfo);
         int selection = selectionDisplayValidator();
@@ -2585,6 +2653,7 @@ void writeData(vector<studentInfo>  allStudentInfo){
             allStudentInfo[i].average = calculateAverage(allStudentInfo[i].homeworkScore, allStudentInfo[i].examScore);
             allStudentInfo[i].averageM = calculateAverage(allStudentInfo[i].median, allStudentInfo[i].examScore);
         }
+        allStudentInfo = sortingAlgo(selectionSortingValidator(), allStudentInfo);
         int longestName = findLongestName(allStudentInfo);
         int longestLastname = findLongestLastname(allStudentInfo);
         int selection = selectionDisplayValidator();

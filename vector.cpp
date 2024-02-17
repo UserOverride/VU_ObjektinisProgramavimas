@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <regex>
+#include <fstream>
 
 using namespace std;
 
@@ -2089,8 +2090,8 @@ int selectionOptionValidator(){
     while (!inputTrue)
     {
         cout << "How would you like to enter data?" << endl;
-        cout << "1 - by hand, 2 - generate grades, 3 - generate grades, first and last names, 4 - exit program" << endl;
-        regex pat {R"(^([1-3]|4))"};
+        cout << "1 - by hand, 2 - generate grades, 3 - generate grades, first and last names, 4 - read from file, 5 - exit program" << endl;
+        regex pat {R"(^([1-4]|5))"};
         string tmp = "";
         getline(cin, tmp);
         smatch sm;
@@ -2112,6 +2113,28 @@ int selectionEntryValidator(){
     {
         cout << "Are you done with data entry?" << endl;
         cout << "1 - no, 2 - yes" << endl;
+        regex pat {R"(^(1|2))"};
+        string tmp = "";
+        getline(cin, tmp);
+        smatch sm;
+        inputTrue = regex_match(tmp,sm,pat);
+        if (!inputTrue)
+        {
+            invalidInput();
+        }else{
+            selection = stoi(tmp);
+        }
+    }
+    return selection;
+}
+
+int selectionOutputValidator(){
+    bool inputTrue = false;
+    int selection = 0;
+    while (!inputTrue)
+    {
+        cout << "How would you like to see the data?" << endl;
+        cout << "1 - In Terminal, 2 - Writen to file" << endl;
         regex pat {R"(^(1|2))"};
         string tmp = "";
         getline(cin, tmp);
@@ -2495,6 +2518,176 @@ void resulter(vector<studentInfo> allStudentInfo){
     }
 }
 
+
+vector<studentInfo> readData(int numberToRead){
+    ifstream inFile("studentai10000.txt");
+    string trash[20];
+    for (int i = 0; i < 18; i++)
+    {
+        inFile >> trash[i];
+    }
+
+    vector<studentInfo> storage;
+    vector<int> gradesStorage;
+
+    for(int aa = 0; aa < numberToRead; aa++)
+    {
+        studentInfo data;
+        inFile >> data.fisrtname >> data.lastname;
+        gradesStorage.clear();
+        for (int i = 0; i < 15; i++)
+        {
+            int tmp = 0;
+            inFile >> tmp;
+            gradesStorage.push_back(tmp);
+        }
+
+        inFile >> data.examScore;
+
+
+        sort(gradesStorage.begin(), gradesStorage.end());
+
+            int homeWorkToalScore = 0;
+            for (int i = 0; i < gradesStorage.size(); i++)
+            {
+                homeWorkToalScore += gradesStorage[i];
+            }
+
+            if (gradesStorage.size() != 0)
+            {
+                data.homeworkScore = (double)homeWorkToalScore/gradesStorage.size();
+            }
+
+            int numberOfHomeWork = gradesStorage.size();
+            if (numberOfHomeWork%2 == 0)
+            {
+                data.median = (gradesStorage[(numberOfHomeWork/2)] + gradesStorage[(numberOfHomeWork/2)-1]) / 2.0;
+            }else{
+                data.median = gradesStorage[(numberOfHomeWork/2)];
+            }
+
+        storage.push_back(data);
+    }
+    
+    return storage;
+}
+
+void writeData(vector<studentInfo>  allStudentInfo, string fileName){
+    ofstream outFile(fileName);
+ if (allStudentInfo.size() == 0)
+    {
+        outFile << "No data was found..." << endl;
+    }else{
+        for (int i = 0; i < allStudentInfo.size(); i++)
+        {
+            allStudentInfo[i].average = calculateAverage(allStudentInfo[i].homeworkScore, allStudentInfo[i].examScore);
+            allStudentInfo[i].averageM = calculateAverage(allStudentInfo[i].median, allStudentInfo[i].examScore);
+        }
+        int longestName = findLongestName(allStudentInfo);
+        int longestLastname = findLongestLastname(allStudentInfo);
+        int selection = selectionDisplayValidator();
+
+         outFile << "Pavarde";
+        if (longestLastname<10)
+        {
+            outFile << "   ";
+        }else{
+            for (int i = 0; i < longestLastname-7+2; i++)
+            {
+                outFile << " ";
+            }
+        }
+        
+        outFile << "Vardas";
+        if (longestName < 9)
+        {
+            outFile << "   ";
+        }else{
+            for (int i = 0; i < longestName-6+2; i++)
+            {
+                outFile << " ";
+            }
+        }
+
+        switch (selection)
+        {
+        case 1:
+            outFile << "Galutinis (Vid).\n";
+            for (int i = 0; i < longestName+2+longestLastname+2; i++)
+            {
+                outFile << "-";
+            }
+            outFile << "-----------------" << endl;
+            break;
+        case 2:
+            outFile << "Galutinis (Med).\n";
+            for (int i = 0; i < longestName+2+longestLastname+2; i++)
+            {
+                outFile << "-";
+            }
+            outFile << "-----------------" << endl;
+            break;
+        case 3:
+            outFile << "Galutinis (Vid). / Galutinis (Med).\n";
+            for (int i = 0; i < longestName+2+longestLastname+2; i++)
+            {
+                outFile << "-";
+            }
+            outFile << "-----------------------------------" << endl;
+        break;
+        }
+
+        for (int i = 0; i < allStudentInfo.size(); i++)
+        {
+            outFile << allStudentInfo[i].lastname;
+            if (longestLastname < 10)
+            {
+                for (int y = 0; y < (10 - allStudentInfo[i].lastname.length()); y++)
+                {
+                    outFile << " ";
+                }
+            }else{
+                for (int y = 0; y < (longestLastname - allStudentInfo[i].lastname.length())+2; y++)
+                {
+                    outFile << " ";
+                }
+            }
+            
+            outFile << allStudentInfo[i].fisrtname;
+            if (longestName < 9)
+            {
+                for (int y = 0; y < (9 - allStudentInfo[i].fisrtname.length()); y++)
+                {
+                    outFile << " ";
+                }
+            }else{
+                for (int y = 0; y < (longestName - allStudentInfo[i].fisrtname.length())+2; y++)
+                {
+                    outFile << " ";
+                }
+            }
+            
+            switch (selection)
+            {
+            case 1:
+                outFile<< fixed << setprecision(2) << allStudentInfo[i].average << endl;
+                break;
+            case 2:
+                outFile<< fixed << setprecision(2) << allStudentInfo[i].averageM << endl;
+                break;
+            case 3:
+                if(allStudentInfo[i].average == 10){
+                    outFile<< fixed << setprecision(2) << allStudentInfo[i].average << "              " << allStudentInfo[i].averageM << endl;
+                }else{
+                    outFile<< fixed << setprecision(2) << allStudentInfo[i].average << "               " << allStudentInfo[i].averageM << endl;
+                }
+                break;
+            }
+        }   
+    }
+}
+
+
 int main() {
     srand(time(0));
 
@@ -2527,7 +2720,11 @@ int main() {
                     break;
                 }
             }
-            resulter(allStudentInfo);
+            if(selectionOutputValidator() == 1){
+                resulter(allStudentInfo);
+            }else{
+                writeData(allStudentInfo);
+            }
             allStudentInfo.clear();
             cout << endl << endl;
             break;
@@ -2552,7 +2749,11 @@ int main() {
                     break;
                 }
             }
-            resulter(allStudentInfo);
+            if(selectionOutputValidator() == 1){
+                resulter(allStudentInfo);
+            }else{
+                writeData(allStudentInfo);
+            }
             allStudentInfo.clear();
             cout << endl << endl;
             break;
@@ -2564,12 +2765,28 @@ int main() {
             {
                 allStudentInfo.push_back(singleInputModule(selection));
             }
-            resulter(allStudentInfo);
+            if(selectionOutputValidator() == 1){
+                resulter(allStudentInfo);
+            }else{
+                writeData(allStudentInfo);
+            }
             allStudentInfo.clear();
             cout << endl << endl;
             break;
         }
         case 4:
+        {
+            allStudentInfo = readData(10000);
+            if(selectionOutputValidator() == 1){
+                resulter(allStudentInfo);
+            }else{
+                writeData(allStudentInfo);
+            }
+            allStudentInfo.clear();
+            cout << endl << "Done" << endl << "Results writen to file results.txt" << endl << endl;
+            break;
+        }
+        case 5:
         {
             cout<< "Ending the program..." << endl <<endl;
             notDone = false;

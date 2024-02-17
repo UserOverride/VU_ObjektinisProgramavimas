@@ -2519,7 +2519,7 @@ void resulter(vector<studentInfo> allStudentInfo){
 }
 
 
-vector<studentInfo> readData(int numberToRead){
+vector<studentInfo> readData(){
     ifstream inFile("studentai10000.txt");
     string trash[20];
     for (int i = 0; i < 18; i++)
@@ -2530,7 +2530,7 @@ vector<studentInfo> readData(int numberToRead){
     vector<studentInfo> storage;
     vector<int> gradesStorage;
 
-    for(int aa = 0; aa < numberToRead; aa++)
+    while(true)
     {
         studentInfo data;
         inFile >> data.fisrtname >> data.lastname;
@@ -2565,8 +2565,10 @@ vector<studentInfo> readData(int numberToRead){
             }else{
                 data.median = gradesStorage[(numberOfHomeWork/2)];
             }
-
         storage.push_back(data);
+        if(inFile.eof()){
+            break;
+        }
     }
     
     return storage;
@@ -2685,6 +2687,7 @@ void writeData(vector<studentInfo>  allStudentInfo){
             }
         }   
     }
+    cout << endl << "Done" << endl << "Results writen to file results.txt" << endl ;
 }
 
 
@@ -2776,14 +2779,14 @@ int main() {
         }
         case 4:
         {
-            allStudentInfo = readData(10000);
+            allStudentInfo = readData();
             if(selectionOutputValidator() == 1){
                 resulter(allStudentInfo);
             }else{
                 writeData(allStudentInfo);
             }
             allStudentInfo.clear();
-            cout << endl << "Done" << endl << "Results writen to file results.txt" << endl << endl;
+            cout << endl << endl;
             break;
         }
         case 5:

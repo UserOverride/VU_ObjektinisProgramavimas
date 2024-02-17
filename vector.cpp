@@ -2574,7 +2574,7 @@ vector<studentInfo> readData(int numberToRead){
 
 void writeData(vector<studentInfo>  allStudentInfo){
     ofstream outFile("results.txt");
- if (allStudentInfo.size() == 0)
+    if (allStudentInfo.size() == 0)
     {
         outFile << "No data was found..." << endl;
     }else{

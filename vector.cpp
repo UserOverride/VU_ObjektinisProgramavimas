@@ -2849,7 +2849,7 @@ void writeData(vector<studentInfo>  allStudentInfo){
 void scenarioTester(){
     for (int i = 0; i < 100; i++)
     {
-        readData("studentai10000.txt", 3);
+        readData("studentai10000.txt", 1);
     }
     
 }

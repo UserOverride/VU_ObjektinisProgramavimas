@@ -2586,9 +2586,8 @@ void resulter(vector<studentInfo> allStudentInfo){
     }
 }
 
-
 vector<studentInfo> readData(){
-    ifstream inFile("studentai10000.txt");
+    ifstream inFile("studentai10000.txt");//ideti appsaugai kai failo nera 
     string trash[20];
     for (int i = 0; i < 18; i++)
     {

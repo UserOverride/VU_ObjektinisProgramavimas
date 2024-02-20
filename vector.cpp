@@ -5,8 +5,6 @@
 #include <algorithm>
 #include <regex>
 #include <fstream>
-#include <sstream>
-#include <chrono>
 
 using namespace std;
 
@@ -2061,11 +2059,6 @@ bool compareLastMed(const studentInfo &a, const studentInfo &b)
     return a.averageM < b.averageM;
 }
 
-bool fileExistanceValidator (string fileName) {
-    ifstream file(fileName);
-    return file.good();
-}
-
 vector<studentInfo> sortingAlgo(int selection, vector<studentInfo> data){
     switch (selection)
     {
@@ -2593,140 +2586,59 @@ void resulter(vector<studentInfo> allStudentInfo){
     }
 }
 
-void consoleLog(string data){
-    cout<<data<<endl;
-}
-
-vector<studentInfo> readData(string fileName, int readingType){
-    /*
-    readingType
-    1 - word at a time
-    2 - line at a time
-    3 - read entire file to buffer
-    */
-    if (!fileExistanceValidator(fileName))
+vector<studentInfo> readData(){
+    ifstream inFile("studentai10000.txt");//ideti appsaugai kai failo nera 
+    string trash[20];
+    for (int i = 0; i < 18; i++)
     {
-        vector<studentInfo> nothing;
-        return nothing;
-    }else{
-    
-        ifstream inFile(fileName);
-        string trash[20];
-        for (int i = 0; i < 18; i++)
-        {
-            inFile >> trash[i];
-        }
-
-        vector<studentInfo> storage;
-        vector<int> gradesStorage;
-        auto start = chrono::high_resolution_clock::now(); 
-
-        while(true)
-        {
-            int quit = false;
-            studentInfo data;
-            switch (readingType)
-            {
-            case 1:
-            {
-                inFile >> data.fisrtname >> data.lastname;
-                gradesStorage.clear();
-                for (int i = 0; i < 15; i++)
-                {
-                    int tmp = 0;
-                    inFile >> tmp;
-                    gradesStorage.push_back(tmp);
-                }
-
-                inFile >> data.examScore;
-                break;
-            }
-            case 2:
-            {
-                gradesStorage.clear();
-                string line;
-                getline(inFile, line);
-                istringstream stream(line);
-
-                stream >> data.fisrtname >> data.lastname;
-                for (int i = 0; i < 15; i++)
-                {
-                    int tmp = 0;
-                    stream >> tmp;
-                    gradesStorage.push_back(tmp);
-                }
-                stream >> data.examScore;
-                
-                break;
-            }
-            case 3:
-            {
-                gradesStorage.clear();
-                stringstream buffer;
-                buffer << inFile.rdbuf();
-                inFile.close();
-                while (!buffer.eof())
-                {
-                    buffer >> data.fisrtname >> data.lastname;
-                    for (int i = 0; i < 15; i++)
-                    {
-                        int tmp = 0;
-                        buffer >> tmp;
-                        gradesStorage.push_back(tmp);
-                    }
-                    buffer >> data.examScore;
-                }
-                quit = true;
-                break;
-            }
-            default:
-                inFile >> data.fisrtname >> data.lastname;
-                gradesStorage.clear();
-                for (int i = 0; i < 15; i++)
-                {
-                    int tmp = 0;
-                    inFile >> tmp;
-                    gradesStorage.push_back(tmp);
-                }
-
-                inFile >> data.examScore;
-                break;
-            }
-           
-
-
-            sort(gradesStorage.begin(), gradesStorage.end());
-
-                int homeWorkToalScore = 0;
-                for (int i = 0; i < gradesStorage.size(); i++)
-                {
-                    homeWorkToalScore += gradesStorage[i];
-                }
-
-                if (gradesStorage.size() != 0)
-                {
-                    data.homeworkScore = (double)homeWorkToalScore/gradesStorage.size();
-                }
-
-                int numberOfHomeWork = gradesStorage.size();
-                if (numberOfHomeWork%2 == 0)
-                {
-                    data.median = (gradesStorage[(numberOfHomeWork/2)] + gradesStorage[(numberOfHomeWork/2)-1]) / 2.0;
-                }else{
-                    data.median = gradesStorage[(numberOfHomeWork/2)];
-                }
-            storage.push_back(data);
-            if(inFile.eof() || quit){
-                break;
-            }
-        }
-
-        auto end = chrono::high_resolution_clock::now();
-        consoleLog(to_string(((end-start).count())/1000000000.0));
-        
-        
-        return storage;
+        inFile >> trash[i];
     }
+
+    vector<studentInfo> storage;
+    vector<int> gradesStorage;
+
+    while(true)
+    {
+        studentInfo data;
+        inFile >> data.fisrtname >> data.lastname;
+        gradesStorage.clear();
+        for (int i = 0; i < 15; i++)
+        {
+            int tmp = 0;
+            inFile >> tmp;
+            gradesStorage.push_back(tmp);
+        }
+
+        inFile >> data.examScore;
+
+
+        sort(gradesStorage.begin(), gradesStorage.end());
+
+            int homeWorkToalScore = 0;
+            for (int i = 0; i < gradesStorage.size(); i++)
+            {
+                homeWorkToalScore += gradesStorage[i];
+            }
+
+            if (gradesStorage.size() != 0)
+            {
+                data.homeworkScore = (double)homeWorkToalScore/gradesStorage.size();
+            }
+
+            int numberOfHomeWork = gradesStorage.size();
+            if (numberOfHomeWork%2 == 0)
+            {
+                data.median = (gradesStorage[(numberOfHomeWork/2)] + gradesStorage[(numberOfHomeWork/2)-1]) / 2.0;
+            }else{
+                data.median = gradesStorage[(numberOfHomeWork/2)];
+            }
+        storage.push_back(data);
+        if(inFile.eof()){
+            break;
+        }
+    }
+    
+    return storage;
 }
 
 void writeData(vector<studentInfo>  allStudentInfo){
@@ -2846,13 +2758,6 @@ void writeData(vector<studentInfo>  allStudentInfo){
     cout << endl << "Done" << endl << "Results writen to file results.txt" << endl ;
 }
 
-void scenarioTester(){
-    for (int i = 0; i < 100; i++)
-    {
-        readData("studentai10000.txt", 3);
-    }
-    
-}
 
 int main() {
     srand(time(0));
@@ -2860,8 +2765,7 @@ int main() {
     vector<studentInfo> allStudentInfo;
     cout << "Hello,\nYou will be asked to enter students data.\nPress Enter to Continue.\n";
     cin.ignore();
-    scenarioTester();
-    bool notDone = false;
+    bool notDone = true;
     while (notDone)
     {
         int selection = selectionOptionValidator();
@@ -2943,7 +2847,7 @@ int main() {
         }
         case 4:
         {
-            allStudentInfo = readData("studentai10000.txt", 1);
+            allStudentInfo = readData();
             if(selectionOutputValidator() == 1){
                 resulter(allStudentInfo);
             }else{

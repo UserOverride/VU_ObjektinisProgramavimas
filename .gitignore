@@ -1,9 +1,9 @@
 
-*.txt
-
 # Extra
 *.ilk
 *.pdb
+*.txt
+
 
 # Prerequisites
 *.d

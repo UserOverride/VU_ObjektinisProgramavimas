@@ -2599,7 +2599,7 @@ void consoleLog(string data){
 
 vector<studentInfo> readData(string fileName, int readingType){
     /*
-    readingType
+    Reading Type
     1 - word at a time
     2 - line at a time
     3 - read entire file to buffer
@@ -2611,11 +2611,23 @@ vector<studentInfo> readData(string fileName, int readingType){
     }else{
     
         ifstream inFile(fileName);
-        string trash[20];
-        for (int i = 0; i < 18; i++)
+        string trash[3];
+        for (int i = 0; i <2; i++)
         {
             inFile >> trash[i];
         }
+
+        int nNumber = 0;
+        while (true){
+            string trashNumber;
+            inFile >> trashNumber;
+            if (trashNumber == "Egz."){
+                break;
+            }else{
+                nNumber++;
+            }
+        }
+
 
         vector<studentInfo> storage;
         vector<int> gradesStorage;
@@ -2631,7 +2643,7 @@ vector<studentInfo> readData(string fileName, int readingType){
             {
                 inFile >> data.fisrtname >> data.lastname;
                 gradesStorage.clear();
-                for (int i = 0; i < 15; i++)
+                for (int i = 0; i < nNumber; i++)
                 {
                     int tmp = 0;
                     inFile >> tmp;
@@ -2649,7 +2661,7 @@ vector<studentInfo> readData(string fileName, int readingType){
                 istringstream stream(line);
 
                 stream >> data.fisrtname >> data.lastname;
-                for (int i = 0; i < 15; i++)
+                for (int i = 0; i < nNumber; i++)
                 {
                     int tmp = 0;
                     stream >> tmp;
@@ -2668,7 +2680,7 @@ vector<studentInfo> readData(string fileName, int readingType){
                 while (!buffer.eof())
                 {
                     buffer >> data.fisrtname >> data.lastname;
-                    for (int i = 0; i < 15; i++)
+                    for (int i = 0; i < nNumber; i++)
                     {
                         int tmp = 0;
                         buffer >> tmp;
@@ -2682,7 +2694,7 @@ vector<studentInfo> readData(string fileName, int readingType){
             default:
                 inFile >> data.fisrtname >> data.lastname;
                 gradesStorage.clear();
-                for (int i = 0; i < 15; i++)
+                for (int i = 0; i < nNumber; i++)
                 {
                     int tmp = 0;
                     inFile >> tmp;
@@ -2722,14 +2734,14 @@ vector<studentInfo> readData(string fileName, int readingType){
         }
 
         auto end = chrono::high_resolution_clock::now();
-        consoleLog(to_string(((end-start).count())/1000000000.0));
-        
+        // consoleLog(to_string(((end-start).count())/1000000000.0));
         
         return storage;
     }
 }
 
 void writeData(vector<studentInfo>  allStudentInfo){
+    
     ofstream outFile("results.txt");
     if (allStudentInfo.size() == 0)
     {
@@ -2847,9 +2859,9 @@ void writeData(vector<studentInfo>  allStudentInfo){
 }
 
 void scenarioTester(){
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 5; i++)
     {
-        readData("studentai10000.txt", 1);
+        readData("studentai1000000.txt", 1);
     }
     
 }
@@ -2860,8 +2872,8 @@ int main() {
     vector<studentInfo> allStudentInfo;
     cout << "Hello,\nYou will be asked to enter students data.\nPress Enter to Continue.\n";
     cin.ignore();
-    scenarioTester();
-    bool notDone = false;
+    // scenarioTester();
+    bool notDone = true;
     while (notDone)
     {
         int selection = selectionOptionValidator();

@@ -1,5 +1,7 @@
-main: functions.o dataTypes.o
-	g++ -o vector vector.cpp functions.o dataTypes.o
+main: functions.o dataTypes.o app.o
+	g++ -o main main.cpp functions.o dataTypes.o app.o
+app:
+	g++ -c app.cpp
 functions:
 	g++ -c functions.cpp
 dataTypes:

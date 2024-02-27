@@ -95,10 +95,13 @@ int runApp(){
         case 4:
         {
             allStudentInfo = readData("studentai10000.txt", 1);
-            if(selectionOutputValidator() == 1){
-                resulter(allStudentInfo);
-            }else{
-                writeData(allStudentInfo);
+            if (allStudentInfo.size() != 0)
+            {
+                if(selectionOutputValidator() == 1){
+                    resulter(allStudentInfo);
+                }else{
+                    writeData(allStudentInfo);
+                }
             }
             allStudentInfo.clear();
             cout << endl << endl;

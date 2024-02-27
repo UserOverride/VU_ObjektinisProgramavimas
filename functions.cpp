@@ -11,7 +11,6 @@
 
 using namespace std;
 
-
 vector<int> generateGrades(){
     vector<int> grades;
     int numberOfGrades = rand() % 200;
@@ -20,6 +19,12 @@ vector<int> generateGrades(){
         grades.push_back((rand() % 11));
     }
     return grades;
+}
+
+void consoleLog(string data){
+    cout<<"----------------------------" << endl;
+    cout << "\t" << data << endl;
+    cout<<"----------------------------" << endl << endl;
 }
 
 int generateExamScore(){
@@ -57,6 +62,32 @@ bool compareLastMed(const studentInfo &a, const studentInfo &b)
 bool fileExistanceValidator (string fileName) {
     ifstream file(fileName);
     return file.good();
+}
+
+void processException() {
+    using namespace std;
+    try {
+        throw;
+    }
+    catch (int selectionOptionValidator()) {
+        consoleLog("Neleistinas pasirinkimas. Galima tik: ");
+    }
+    catch (int selectionSortingValidator()) {
+        consoleLog("Neleistinas pasirinkimas. Galima tik: ");
+    }
+    catch (int selectionEntryValidator()) {
+        consoleLog("Neleistinas pasirinkimas. Galima tik: ");
+    }
+    catch (int selectionOutputValidator()) {
+        consoleLog("Neleistinas pasirinkimas. Galima tik: ");
+    }
+    catch (int selectionGenerationValidator()) {
+        consoleLog("Neleistinas pasirinkimas. Galima tik: ");
+    }
+    catch (...) {
+        consoleLog("Nezinomas error");
+        
+    }
 }
 
 vector<studentInfo> sortingAlgo(int selection, vector<studentInfo> data){
@@ -141,12 +172,23 @@ int selectionOptionValidator(){
         getline(cin, tmp);
         smatch sm;
         inputTrue = regex_match(tmp,sm,pat);
-        if (!inputTrue)
+        try
         {
-            invalidInput();
-        }else{
-            selection = stoi(tmp);
+            if (!inputTrue)
+            {
+                // invalidInput();
+                throw(selectionOptionValidator);
+
+            }else{
+                selection = stoi(tmp);
+            }  
         }
+        catch(...)
+        {
+            processException();
+        }
+        
+        
     }
     return selection;
 }
@@ -584,10 +626,6 @@ void resulter(vector<studentInfo> allStudentInfo){
             }
         }   
     }
-}
-
-void consoleLog(string data){
-    cout<<data<<endl;
 }
 
 vector<studentInfo> readData(string fileName, int readingType){

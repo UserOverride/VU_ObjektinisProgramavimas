@@ -155,9 +155,15 @@ int findLongestLastname(vector<studentInfo> data){
 }
 
 void invalidInput(){
-    cout<<"-----------------------------------" << endl;
-    cout<<"           Invalid Input           " << endl;
-    cout<<"-----------------------------------" << endl << endl;
+    try
+    {
+        throw std::invalid_argument("Neteisinga ivestis!");
+    }
+    catch(...)
+    {
+        processException();
+    }
+    
 
 }
 

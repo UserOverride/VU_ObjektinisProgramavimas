@@ -65,21 +65,20 @@ bool fileExistanceValidator (string fileName) {
 }
 
 void processException() {
-    using namespace std;
     try {
         throw;
     }
     catch (int selectionOptionValidator()) {
-        consoleLog("Neleistinas pasirinkimas. Galima tik: ");
+        consoleLog("Neleistinas pasirinkimas. Galima tik: 1, 2, 3, 4, 5");
     }
     catch (int selectionSortingValidator()) {
-        consoleLog("Neleistinas pasirinkimas. Galima tik: ");
+        consoleLog("Neleistinas pasirinkimas. Galima tik: 1, 2, 3, 4, 5");
     }
     catch (int selectionEntryValidator()) {
-        consoleLog("Neleistinas pasirinkimas. Galima tik: ");
+        consoleLog("Neleistinas pasirinkimas. Galima tik: 1, 2");
     }
     catch (int selectionOutputValidator()) {
-        consoleLog("Neleistinas pasirinkimas. Galima tik: ");
+        consoleLog("Neleistinas pasirinkimas. Galima tik: 1, 2");
     }
     catch (int selectionGenerationValidator()) {
         consoleLog("Neleistinas pasirinkimas. Galima tik: ");
@@ -205,11 +204,20 @@ int selectionSortingValidator(){
         getline(cin, tmp);
         smatch sm;
         inputTrue = regex_match(tmp,sm,pat);
-        if (!inputTrue)
+        try
         {
-            invalidInput();
-        }else{
-            selection = stoi(tmp);
+            if (!inputTrue)
+            {
+                // invalidInput();
+                throw(selectionSortingValidator);
+
+            }else{
+                selection = stoi(tmp);
+            }  
+        }
+        catch(...)
+        {
+            processException();
         }
     }
     return selection;
@@ -227,11 +235,20 @@ int selectionEntryValidator(){
         getline(cin, tmp);
         smatch sm;
         inputTrue = regex_match(tmp,sm,pat);
-        if (!inputTrue)
+        try
         {
-            invalidInput();
-        }else{
-            selection = stoi(tmp);
+            if (!inputTrue)
+            {
+                // invalidInput();
+                throw(selectionEntryValidator);
+
+            }else{
+                selection = stoi(tmp);
+            }  
+        }
+        catch(...)
+        {
+            processException();
         }
     }
     return selection;
@@ -249,11 +266,20 @@ int selectionOutputValidator(){
         getline(cin, tmp);
         smatch sm;
         inputTrue = regex_match(tmp,sm,pat);
-        if (!inputTrue)
+        try
         {
-            invalidInput();
-        }else{
-            selection = stoi(tmp);
+            if (!inputTrue)
+            {
+                // invalidInput();
+                throw(selectionOutputValidator);
+
+            }else{
+                selection = stoi(tmp);
+            }  
+        }
+        catch(...)
+        {
+            processException();
         }
     }
     return selection;

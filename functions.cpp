@@ -81,7 +81,10 @@ void processException() {
         consoleLog("Neleistinas pasirinkimas. Galima tik: 1, 2");
     }
     catch (int selectionGenerationValidator()) {
-        consoleLog("Neleistinas pasirinkimas. Galima tik: ");
+        consoleLog("Neleistinas pasirinkimas. Galima tik: [1; 1000]");
+    }
+    catch (int selectionDisplayValidator()) {
+        consoleLog("Neleistinas pasirinkimas. Galima tik: 1, 2, 3");
     }
     catch (...) {
         consoleLog("Nezinomas error");
@@ -296,11 +299,20 @@ int selectionGenerationValidator(){
         getline(cin, tmp);
         smatch sm;
         inputTrue = regex_match(tmp,sm,pat);
-        if (!inputTrue)
+        try
         {
-            invalidInput();
-        }else{
-            selection = stoi(tmp);
+            if (!inputTrue)
+            {
+                // invalidInput();
+                throw(selectionGenerationValidator);
+
+            }else{
+                selection = stoi(tmp);
+            }  
+        }
+        catch(...)
+        {
+            processException();
         }
     }
     return selection;
@@ -318,11 +330,20 @@ int selectionDisplayValidator(){
         getline(cin, tmp);
         smatch sm;
         inputTrue = regex_match(tmp,sm,pat);
-        if (!inputTrue)
+        try
         {
-            invalidInput();
-        }else{
-            selection = stoi(tmp);
+            if (!inputTrue)
+            {
+                // invalidInput();
+                throw(selectionDisplayValidator);
+
+            }else{
+                selection = stoi(tmp);
+            }  
+        }
+        catch(...)
+        {
+            processException();
         }
     }
     return selection;

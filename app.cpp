@@ -94,7 +94,7 @@ int runApp(){
         }
         case 4:
         {
-            allStudentInfo = readData("studentai10000.txt", 1);
+            allStudentInfo = readData("studentai100000.txt", 1);
             if (allStudentInfo.size() != 0)
             {
                 if(selectionOutputValidator() == 1){

@@ -7,6 +7,7 @@
 #include <fstream>
 #include <sstream>
 #include <chrono>
+#include <stdexcept>
 #include "dataTypes.h"
 
 using namespace std;
@@ -22,9 +23,16 @@ vector<int> generateGrades(){
 }
 
 void consoleLog(string data){
-    cout<<"----------------------------" << endl;
-    cout << "\t" << data << endl;
-    cout<<"----------------------------" << endl << endl;
+    for (int i = 0; i < data.length()+16; i++)
+    {
+        cout << "-";
+    }
+    cout << endl << "\t" << data << endl;
+    for (int i = 0; i < data.length()+16; i++)
+    {
+        cout << "-";
+    }
+    cout << endl << endl;
 }
 
 int generateExamScore(){
@@ -68,23 +76,8 @@ void processException() {
     try {
         throw;
     }
-    catch (int selectionOptionValidator()) {
-        consoleLog("Neleistinas pasirinkimas. Galima tik: 1, 2, 3, 4, 5");
-    }
-    catch (int selectionSortingValidator()) {
-        consoleLog("Neleistinas pasirinkimas. Galima tik: 1, 2, 3, 4, 5");
-    }
-    catch (int selectionEntryValidator()) {
-        consoleLog("Neleistinas pasirinkimas. Galima tik: 1, 2");
-    }
-    catch (int selectionOutputValidator()) {
-        consoleLog("Neleistinas pasirinkimas. Galima tik: 1, 2");
-    }
-    catch (int selectionGenerationValidator()) {
-        consoleLog("Neleistinas pasirinkimas. Galima tik: [1; 1000]");
-    }
-    catch (int selectionDisplayValidator()) {
-        consoleLog("Neleistinas pasirinkimas. Galima tik: 1, 2, 3");
+    catch (const std::invalid_argument& e) {
+        consoleLog(e.what());
     }
     catch (...) {
         consoleLog("Nezinomas error");
@@ -179,7 +172,7 @@ int selectionOptionValidator(){
             if (!inputTrue)
             {
                 // invalidInput();
-                throw(selectionOptionValidator);
+                throw std::invalid_argument("Neleistinas pasirinkimas. Galima tik: 1, 2, 3, 4, 5");
 
             }else{
                 selection = stoi(tmp);
@@ -212,7 +205,7 @@ int selectionSortingValidator(){
             if (!inputTrue)
             {
                 // invalidInput();
-                throw(selectionSortingValidator);
+                throw std::invalid_argument("Neleistinas pasirinkimas. Galima tik: 1, 2, 3, 4, 5");
 
             }else{
                 selection = stoi(tmp);
@@ -243,7 +236,7 @@ int selectionEntryValidator(){
             if (!inputTrue)
             {
                 // invalidInput();
-                throw(selectionEntryValidator);
+                throw std::invalid_argument("Neleistinas pasirinkimas. Galima tik: 1, 2");
 
             }else{
                 selection = stoi(tmp);
@@ -274,7 +267,7 @@ int selectionOutputValidator(){
             if (!inputTrue)
             {
                 // invalidInput();
-                throw(selectionOutputValidator);
+                throw std::invalid_argument("Neleistinas pasirinkimas. Galima tik: 1, 2");
 
             }else{
                 selection = stoi(tmp);
@@ -304,7 +297,7 @@ int selectionGenerationValidator(){
             if (!inputTrue)
             {
                 // invalidInput();
-                throw(selectionGenerationValidator);
+                throw std::invalid_argument("Invalid selection. Allowed only: [1; 1000]");
 
             }else{
                 selection = stoi(tmp);
@@ -335,7 +328,7 @@ int selectionDisplayValidator(){
             if (!inputTrue)
             {
                 // invalidInput();
-                throw(selectionDisplayValidator);
+                throw std::invalid_argument("Neleistinas pasirinkimas. Galima tik: 1, 2, 3");
 
             }else{
                 selection = stoi(tmp);

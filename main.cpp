@@ -1,5 +1,4 @@
 #include "app.h"
-
 int main(){
-    return runApp();
+  return runApp();
 }

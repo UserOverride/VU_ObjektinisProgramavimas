@@ -117,5 +117,5 @@ int runApp(){
         }
         }
     }
-    return 1;
+    return 0;
 }

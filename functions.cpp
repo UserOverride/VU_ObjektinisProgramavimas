@@ -69,6 +69,9 @@ bool compareLastMed(const studentInfo &a, const studentInfo &b)
 
 bool fileExistanceValidator (string fileName) {
     ifstream file(fileName);
+    if (!file.good()) {
+        throw runtime_error("Failas pavadinimui \"" + fileName + "\" neegzistuoja!");
+    }
     return file.good();
 }
 
@@ -76,7 +79,10 @@ void processException() {
     try {
         throw;
     }
-    catch (const std::invalid_argument& e) {
+    catch (const invalid_argument& e) {
+        consoleLog(e.what());
+    }
+    catch (const runtime_error& e) {
         consoleLog(e.what());
     }
     catch (...) {
@@ -297,7 +303,7 @@ int selectionGenerationValidator(){
             if (!inputTrue)
             {
                 // invalidInput();
-                throw std::invalid_argument("Invalid selection. Allowed only: [1; 1000]");
+                throw std::invalid_argument("Neleistinas pasirinkimas. Galima tik: [1; 1000]");
 
             }else{
                 selection = stoi(tmp);
@@ -675,139 +681,148 @@ vector<studentInfo> readData(string fileName, int readingType){
     2 - line at a time
     3 - read entire file to buffer
     */
-    if (!fileExistanceValidator(fileName))
+    try
     {
-        vector<studentInfo> nothing;
-        return nothing;
-    }else{
-    
-        ifstream inFile(fileName);
-        string trash[3];
-        for (int i = 0; i <2; i++)
+        if (!fileExistanceValidator(fileName))
         {
-            inFile >> trash[i];
-        }
-
-        int nNumber = 0;
-        while (true){
-            string trashNumber;
-            inFile >> trashNumber;
-            if (trashNumber == "Egz."){
-                break;
-            }else{
-                nNumber++;
+            vector<studentInfo> nothing;
+            return nothing;
+        }else{
+        
+            ifstream inFile(fileName);
+            string trash[3];
+            for (int i = 0; i <2; i++)
+            {
+                inFile >> trash[i];
             }
-        }
 
-
-        vector<studentInfo> storage;
-        vector<int> gradesStorage;
-        auto start = chrono::high_resolution_clock::now(); 
-
-        while(true)
-        {
-            int quit = false;
-            studentInfo data;
-            switch (readingType)
-            {
-            case 1:
-            {
-                inFile >> data.fisrtname >> data.lastname;
-                gradesStorage.clear();
-                for (int i = 0; i < nNumber; i++)
-                {
-                    int tmp = 0;
-                    inFile >> tmp;
-                    gradesStorage.push_back(tmp);
+            int nNumber = 0;
+            while (true){
+                string trashNumber;
+                inFile >> trashNumber;
+                if (trashNumber == "Egz."){
+                    break;
+                }else{
+                    nNumber++;
                 }
-
-                inFile >> data.examScore;
-                break;
             }
-            case 2:
-            {
-                gradesStorage.clear();
-                string line;
-                getline(inFile, line);
-                istringstream stream(line);
 
-                stream >> data.fisrtname >> data.lastname;
-                for (int i = 0; i < nNumber; i++)
-                {
-                    int tmp = 0;
-                    stream >> tmp;
-                    gradesStorage.push_back(tmp);
-                }
-                stream >> data.examScore;
-                
-                break;
-            }
-            case 3:
+
+            vector<studentInfo> storage;
+            vector<int> gradesStorage;
+            auto start = chrono::high_resolution_clock::now(); 
+
+            while(true)
             {
-                gradesStorage.clear();
-                stringstream buffer;
-                buffer << inFile.rdbuf();
-                inFile.close();
-                while (!buffer.eof())
+                int quit = false;
+                studentInfo data;
+                switch (readingType)
                 {
-                    buffer >> data.fisrtname >> data.lastname;
+                case 1:
+                {
+                    inFile >> data.fisrtname >> data.lastname;
+                    gradesStorage.clear();
                     for (int i = 0; i < nNumber; i++)
                     {
                         int tmp = 0;
-                        buffer >> tmp;
+                        inFile >> tmp;
                         gradesStorage.push_back(tmp);
                     }
-                    buffer >> data.examScore;
+
+                    inFile >> data.examScore;
+                    break;
                 }
-                quit = true;
-                break;
+                case 2:
+                {
+                    gradesStorage.clear();
+                    string line;
+                    getline(inFile, line);
+                    istringstream stream(line);
+
+                    stream >> data.fisrtname >> data.lastname;
+                    for (int i = 0; i < nNumber; i++)
+                    {
+                        int tmp = 0;
+                        stream >> tmp;
+                        gradesStorage.push_back(tmp);
+                    }
+                    stream >> data.examScore;
+                    
+                    break;
+                }
+                case 3:
+                {
+                    gradesStorage.clear();
+                    stringstream buffer;
+                    buffer << inFile.rdbuf();
+                    inFile.close();
+                    while (!buffer.eof())
+                    {
+                        buffer >> data.fisrtname >> data.lastname;
+                        for (int i = 0; i < nNumber; i++)
+                        {
+                            int tmp = 0;
+                            buffer >> tmp;
+                            gradesStorage.push_back(tmp);
+                        }
+                        buffer >> data.examScore;
+                    }
+                    quit = true;
+                    break;
+                }
+                default:
+                    inFile >> data.fisrtname >> data.lastname;
+                    gradesStorage.clear();
+                    for (int i = 0; i < nNumber; i++)
+                    {
+                        int tmp = 0;
+                        inFile >> tmp;
+                        gradesStorage.push_back(tmp);
+                    }
+
+                    inFile >> data.examScore;
+                    break;
+                }
+            
+
+
+                sort(gradesStorage.begin(), gradesStorage.end());
+
+                    int homeWorkToalScore = 0;
+                    for (int i = 0; i < gradesStorage.size(); i++)
+                    {
+                        homeWorkToalScore += gradesStorage[i];
+                    }
+
+                    if (gradesStorage.size() != 0)
+                    {
+                        data.homeworkScore = (double)homeWorkToalScore/gradesStorage.size();
+                    }
+
+                    int numberOfHomeWork = gradesStorage.size();
+                    if (numberOfHomeWork%2 == 0)
+                    {
+                        data.median = (gradesStorage[(numberOfHomeWork/2)] + gradesStorage[(numberOfHomeWork/2)-1]) / 2.0;
+                    }else{
+                        data.median = gradesStorage[(numberOfHomeWork/2)];
+                    }
+                storage.push_back(data);
+                if(inFile.eof() || quit){
+                    break;
+                }
             }
-            default:
-                inFile >> data.fisrtname >> data.lastname;
-                gradesStorage.clear();
-                for (int i = 0; i < nNumber; i++)
-                {
-                    int tmp = 0;
-                    inFile >> tmp;
-                    gradesStorage.push_back(tmp);
-                }
 
-                inFile >> data.examScore;
-                break;
-            }
-           
-
-
-            sort(gradesStorage.begin(), gradesStorage.end());
-
-                int homeWorkToalScore = 0;
-                for (int i = 0; i < gradesStorage.size(); i++)
-                {
-                    homeWorkToalScore += gradesStorage[i];
-                }
-
-                if (gradesStorage.size() != 0)
-                {
-                    data.homeworkScore = (double)homeWorkToalScore/gradesStorage.size();
-                }
-
-                int numberOfHomeWork = gradesStorage.size();
-                if (numberOfHomeWork%2 == 0)
-                {
-                    data.median = (gradesStorage[(numberOfHomeWork/2)] + gradesStorage[(numberOfHomeWork/2)-1]) / 2.0;
-                }else{
-                    data.median = gradesStorage[(numberOfHomeWork/2)];
-                }
-            storage.push_back(data);
-            if(inFile.eof() || quit){
-                break;
-            }
+            auto end = chrono::high_resolution_clock::now();
+            // consoleLog(to_string(((end-start).count())/1000000000.0));
+            
+            return storage;
         }
-
-        auto end = chrono::high_resolution_clock::now();
-        // consoleLog(to_string(((end-start).count())/1000000000.0));
-        
-        return storage;
+    }
+    catch(...)
+    {
+        processException();
+        vector<studentInfo> nothing;
+        return nothing;
     }
 }
 

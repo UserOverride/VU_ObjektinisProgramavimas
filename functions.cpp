@@ -832,9 +832,9 @@ vector<studentInfo> readData(string fileName, int readingType){
     }
 }
 
-void writeData(vector<studentInfo>  allStudentInfo){
+void writeData(vector<studentInfo>  allStudentInfo, string fileName){
     
-    ofstream outFile("results.txt");
+    ofstream outFile(fileName);
     if (allStudentInfo.size() == 0)
     {
         outFile << "No data was found..." << endl;
@@ -1034,6 +1034,10 @@ void dotests(){
     for (int i = 0; i < 5; i++)
     {
         cout << "Test file name: test" + to_string(vals[i]) + ".txt\n"; 
+        cout << "Time taken to read file: ";
+        cout << "Time seperate students: ";
+        cout << "Time taken to write good students: ";
+        cout << "Time taken to write bad students: ";
     }
     
 }

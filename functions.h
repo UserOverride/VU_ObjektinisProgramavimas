@@ -30,7 +30,7 @@ studentInfo singleInputModule(int selection);
 void resulter(std::vector<studentInfo> allStudentInfo);
 void consoleLog(std::string data);
 std::vector<studentInfo> readData(std::string fileName, int readingType);
-void writeData(std::vector<studentInfo> allStudentInfo);
+void writeData(std::vector<studentInfo> allStudentInfo, string fileName);
 void scenarioTester();
 void generateTestFiles();
 void dotests();

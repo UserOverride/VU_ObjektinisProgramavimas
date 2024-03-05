@@ -832,7 +832,7 @@ vector<studentInfo> readData(string fileName, int readingType){
     }
 }
 
-void writeData(vector<studentInfo>  allStudentInfo, string fileName){
+void writeData(vector<studentInfo>  allStudentInfo, string fileName, int spec){
     
     ofstream outFile(fileName);
     if (allStudentInfo.size() == 0)
@@ -844,12 +844,26 @@ void writeData(vector<studentInfo>  allStudentInfo, string fileName){
             allStudentInfo[i].average = calculateAverage(allStudentInfo[i].homeworkScore, allStudentInfo[i].examScore);
             allStudentInfo[i].averageM = calculateAverage(allStudentInfo[i].median, allStudentInfo[i].examScore);
         }
-        allStudentInfo = sortingAlgo(selectionSortingValidator(), allStudentInfo);
+        if (spec != 2)
+        {
+            allStudentInfo = sortingAlgo(selectionSortingValidator(), allStudentInfo);
+        } else{
+            allStudentInfo = sortingAlgo(3, allStudentInfo);
+        }
+
         int longestName = findLongestName(allStudentInfo);
         int longestLastname = findLongestLastname(allStudentInfo);
-        int selection = selectionDisplayValidator();
 
-         outFile << "Pavarde";
+        int selection;
+        if (spec == 2)
+        {
+            selection = 1;
+        }else{
+            selection = selectionDisplayValidator();
+        }
+        
+
+        outFile << "Pavarde";
         if (longestLastname<10)
         {
             outFile << "   ";
@@ -947,7 +961,7 @@ void writeData(vector<studentInfo>  allStudentInfo, string fileName){
             }
         }   
     }
-    cout << endl << "Done" << endl << "Results writen to file results.txt" << endl ;
+    // cout << endl << "Done" << endl << "Results writen to file results.txt" << endl ;
 }
 
 void scenarioTester(){
@@ -1063,6 +1077,11 @@ void dotests(){
         cout << "Time taken to read file: " + to_string(times) + "s\n";
 
         start = chrono::high_resolution_clock::now(); 
+        for (int i = 0; i < datas.size(); i++)
+        {
+            datas[i].average = calculateAverage(datas[i].homeworkScore, datas[i].examScore);
+            datas[i].averageM = calculateAverage(datas[i].median, datas[i].examScore);
+        }
         vector<vector<studentInfo>> mega = separate(datas);
         end = chrono::high_resolution_clock::now();
         times = ((end-start).count())/1000000000.0;
@@ -1070,14 +1089,14 @@ void dotests(){
         cout << "Time seperate students: " + to_string(times) + "s\n";
 
         start = chrono::high_resolution_clock::now(); 
-        writeData(mega[0], "res" + to_string(vals[i]) + ".txt");
+        writeData(mega[0], "resGood" + to_string(vals[i]) + ".txt", 2);
         end = chrono::high_resolution_clock::now();
         times = ((end-start).count())/1000000000.0;
         totaltime += times;
         cout << "Time taken to write good students: " + to_string(times) + "s\n";
 
         start = chrono::high_resolution_clock::now(); 
-        writeData(mega[1], "res" + to_string(vals[i]) + ".txt");
+        writeData(mega[1], "resBad" + to_string(vals[i]) + ".txt", 2);
         end = chrono::high_resolution_clock::now();
         times = ((end-start).count())/1000000000.0;
         totaltime += times;

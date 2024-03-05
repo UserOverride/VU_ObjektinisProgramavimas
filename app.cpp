@@ -41,7 +41,7 @@ int runApp(){
             if(selectionOutputValidator() == 1){
                 resulter(allStudentInfo);
             }else{
-                writeData(allStudentInfo, "res.txt");
+                writeData(allStudentInfo, "res.txt", 1);
             }
             allStudentInfo.clear();
             cout << endl << endl;
@@ -70,7 +70,7 @@ int runApp(){
             if(selectionOutputValidator() == 1){
                 resulter(allStudentInfo);
             }else{
-                writeData(allStudentInfo, "res.txt");
+                writeData(allStudentInfo, "res.txt", 1);
             }
             allStudentInfo.clear();
             cout << endl << endl;
@@ -86,7 +86,7 @@ int runApp(){
             if(selectionOutputValidator() == 1){
                 resulter(allStudentInfo);
             }else{
-                writeData(allStudentInfo, "res.txt");
+                writeData(allStudentInfo, "res.txt", 1);
             }
             allStudentInfo.clear();
             cout << endl << endl;
@@ -114,7 +114,7 @@ int runApp(){
                 if(selectionOutputValidator() == 1){
                     resulter(allStudentInfo);
                 }else{
-                    writeData(allStudentInfo, "res.txt");
+                    writeData(allStudentInfo, "res.txt", 1);
                 }
             }
             allStudentInfo.clear();

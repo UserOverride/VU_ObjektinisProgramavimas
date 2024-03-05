@@ -173,8 +173,8 @@ int selectionOptionValidator(){
     while (!inputTrue)
     {
         cout << "How would you like to enter data?" << endl;
-        cout << "1 - by hand, 2 - generate grades, 3 - generate grades, first and last names, 4 - read from file, 5 - exit program" << endl;
-        regex pat {R"(^([1-4]|5))"};
+        cout << "1 - by hand, 2 - generate grades, 3 - generate grades, first and last names, 4 - read from file, 5 - generate test files, 6 - perform tests 7 - exit program" << endl;
+        regex pat {R"(^([1-6]|7))"};
         string tmp = "";
         getline(cin, tmp);
         smatch sm;
@@ -184,7 +184,7 @@ int selectionOptionValidator(){
             if (!inputTrue)
             {
                 // invalidInput();
-                throw std::invalid_argument("Neleistinas pasirinkimas. Galima tik: 1, 2, 3, 4, 5");
+                throw std::invalid_argument("Neleistinas pasirinkimas. Galima tik: 1, 2, 3, 4, 5, 6, 7");
 
             }else{
                 selection = stoi(tmp);
@@ -956,4 +956,14 @@ void scenarioTester(){
         readData("studentai1000000.txt", 1);
     }
     
+}
+
+double generateFile(string testfileName, long int fileSize){
+
+}
+
+void generateTestFiles(){
+    cout << "Starting file generation...\n\n";
+    cout << "Generating file test1000.txt with 1000 students data.\n";
+    cout << "Time taken: " << 
 }

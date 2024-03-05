@@ -94,6 +94,20 @@ int runApp(){
         }
         case 4:
         {
+            generateTestFiles();
+            allStudentInfo.clear();
+            cout << endl << endl;
+            break;
+        }
+        case 5:
+        {
+            dotests();
+            allStudentInfo.clear();
+            cout << endl << endl;
+            break;
+        }
+        case 6:
+        {
             allStudentInfo = readData("studentai100000.txt", 1);
             if (allStudentInfo.size() != 0)
             {
@@ -107,7 +121,7 @@ int runApp(){
             cout << endl << endl;
             break;
         }
-        case 5:
+        case 7:
         {
             cout<< "Ending the program..." << endl <<endl;
             notDone = false;

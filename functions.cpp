@@ -968,7 +968,7 @@ double generateFile(string testfileName, long int fileSize){
     {
         tmp << "ND" << to_string(i+1) << "     ";
     }
-    tmp << "EGZ." << "\n";
+    tmp << "Egz." << "\n";
 
     for (long int i = 0; i < fileSize; i++)
     {
@@ -1029,20 +1029,63 @@ void generateTestFiles(){
 
 }
 
+vector<vector<studentInfo>> separate(vector<studentInfo> datas){
+    vector<studentInfo> good;
+    vector<studentInfo> notGood;
+    for (int i = 0; i < datas.size(); i++)
+    {
+        if (datas[i].average < 5)
+        {
+            notGood.push_back(datas[i]);
+        }else{
+            good.push_back(datas[i]);
+        }
+    }
+    vector<vector<studentInfo>> mega;
+    mega.push_back(good);
+    mega.push_back(notGood);
+    return mega;
+    
+}
+
 void dotests(){
     int vals[] = {1000, 10000, 100000, 1000000, 10000000};
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 1; i++)
     {   
         double totaltime = 0;
         cout << "Test file name: test" + to_string(vals[i]) + ".txt\n"; 
+
         auto start = chrono::high_resolution_clock::now(); 
+        vector<studentInfo> datas = readData("test" + to_string(vals[i]) + ".txt", 1);
         auto end = chrono::high_resolution_clock::now();
         double times = ((end-start).count())/1000000000.0;
         totaltime += times;
         cout << "Time taken to read file: " + to_string(times) + "s\n";
-        cout << "Time seperate students: ";
-        cout << "Time taken to write good students: ";
-        cout << "Time taken to write bad students: ";
+
+        start = chrono::high_resolution_clock::now(); 
+        vector<vector<studentInfo>> mega = separate(datas);
+        end = chrono::high_resolution_clock::now();
+        times = ((end-start).count())/1000000000.0;
+        totaltime += times;
+        cout << "Time seperate students: " + to_string(times) + "s\n";
+
+        start = chrono::high_resolution_clock::now(); 
+        end = chrono::high_resolution_clock::now();
+        times = ((end-start).count())/1000000000.0;
+        totaltime += times;
+        cout << "Time taken to write good students: " + to_string(times) + "s\n";
+
+        start = chrono::high_resolution_clock::now(); 
+        end = chrono::high_resolution_clock::now();
+        times = ((end-start).count())/1000000000.0;
+        totaltime += times;
+        cout << "Time taken to write bad students: " + to_string(times) + "s\n";
+
+        start = chrono::high_resolution_clock::now(); 
+        end = chrono::high_resolution_clock::now();
+        times = ((end-start).count())/1000000000.0;
+        totaltime += times;
+        cout << "Total time taken: " + to_string(totaltime) + "s\n\n\n";
     }
     
 }

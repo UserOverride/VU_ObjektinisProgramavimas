@@ -1032,9 +1032,14 @@ void generateTestFiles(){
 void dotests(){
     int vals[] = {1000, 10000, 100000, 1000000, 10000000};
     for (int i = 0; i < 5; i++)
-    {
+    {   
+        double totaltime = 0;
         cout << "Test file name: test" + to_string(vals[i]) + ".txt\n"; 
-        cout << "Time taken to read file: ";
+        auto start = chrono::high_resolution_clock::now(); 
+        auto end = chrono::high_resolution_clock::now();
+        double times = ((end-start).count())/1000000000.0;
+        totaltime += times;
+        cout << "Time taken to read file: " + to_string(times) + "s\n";
         cout << "Time seperate students: ";
         cout << "Time taken to write good students: ";
         cout << "Time taken to write bad students: ";

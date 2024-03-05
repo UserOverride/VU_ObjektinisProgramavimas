@@ -92,21 +92,21 @@ int runApp(){
             cout << endl << endl;
             break;
         }
-        case 4:
+        case 5:
         {
             generateTestFiles();
             allStudentInfo.clear();
             cout << endl << endl;
             break;
         }
-        case 5:
+        case 6:
         {
             dotests();
             allStudentInfo.clear();
             cout << endl << endl;
             break;
         }
-        case 6:
+        case 4:
         {
             allStudentInfo = readData("studentai100000.txt", 1);
             if (allStudentInfo.size() != 0)

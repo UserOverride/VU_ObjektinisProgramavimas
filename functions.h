@@ -32,5 +32,7 @@ void consoleLog(std::string data);
 std::vector<studentInfo> readData(std::string fileName, int readingType);
 void writeData(std::vector<studentInfo> allStudentInfo);
 void scenarioTester();
+void generateTestFiles();
+void dotests();
 
 #endif 

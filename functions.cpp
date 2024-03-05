@@ -959,11 +959,17 @@ void scenarioTester(){
 }
 
 double generateFile(string testfileName, long int fileSize){
-
+    ofstream tmp(testfileName);
+    int numberOfGrades = rand() % 11;
+    // int numberOfGrades = 10; // for testing 
 }
 
 void generateTestFiles(){
     cout << "Starting file generation...\n\n";
-    cout << "Generating file test1000.txt with 1000 students data.\n";
-    cout << "Time taken: " << 
+    cout << "Generating file \"test1000.txt\" with 1000 students data.\n";
+    cout << "Time taken: " <<  to_string(generateFile("test1000.txt", 1000)) << "\n";
+}
+
+void dotests(){
+
 }

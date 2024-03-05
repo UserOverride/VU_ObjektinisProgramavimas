@@ -1048,11 +1048,14 @@ vector<vector<studentInfo>> separate(vector<studentInfo> datas){
     vector<studentInfo> notGood;
     for (int i = 0; i < datas.size(); i++)
     {
-        if (datas[i].average < 5)
+        if (datas[i].fisrtname != "")
         {
-            notGood.push_back(datas[i]);
-        }else{
-            good.push_back(datas[i]);
+            if (datas[i].average < 5)
+            {
+                notGood.push_back(datas[i]);
+            }else{
+                good.push_back(datas[i]);
+            }
         }
     }
     vector<vector<studentInfo>> mega;
@@ -1064,7 +1067,7 @@ vector<vector<studentInfo>> separate(vector<studentInfo> datas){
 
 void dotests(){
     int vals[] = {1000, 10000, 100000, 1000000, 10000000};
-    for (int i = 0; i < 1; i++)
+    for (int i = 0; i < 2; i++)
     {   
         double totaltime = 0;
         cout << "Test file name: test" + to_string(vals[i]) + ".txt\n"; 

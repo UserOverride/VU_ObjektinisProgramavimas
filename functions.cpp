@@ -1067,7 +1067,7 @@ vector<vector<studentInfo>> separate(vector<studentInfo> datas){
 
 void dotests(){
     int vals[] = {1000, 10000, 100000, 1000000, 10000000};
-    for (int i = 0; i < 2; i++)
+    for (int i = 0; i < 5; i++)
     {   
         double totaltime = 0;
         cout << "Test file name: test" + to_string(vals[i]) + ".txt\n"; 

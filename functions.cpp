@@ -1030,10 +1030,10 @@ void generateTestFiles(){
 }
 
 void dotests(){
-    int vals[] = [1000, 10000, 100000, 1000000, 10000000];
+    int vals[] = {1000, 10000, 100000, 1000000, 10000000};
     for (int i = 0; i < 5; i++)
     {
-        /* code */
+        cout << "Test file name: test" + to_string(vals[i]) + ".txt\n"; 
     }
     
 }

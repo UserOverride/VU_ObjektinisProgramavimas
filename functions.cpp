@@ -1070,12 +1070,14 @@ void dotests(){
         cout << "Time seperate students: " + to_string(times) + "s\n";
 
         start = chrono::high_resolution_clock::now(); 
+        writeData(mega[0], "res" + to_string(vals[i]) + ".txt");
         end = chrono::high_resolution_clock::now();
         times = ((end-start).count())/1000000000.0;
         totaltime += times;
         cout << "Time taken to write good students: " + to_string(times) + "s\n";
 
         start = chrono::high_resolution_clock::now(); 
+        writeData(mega[1], "res" + to_string(vals[i]) + ".txt");
         end = chrono::high_resolution_clock::now();
         times = ((end-start).count())/1000000000.0;
         totaltime += times;

@@ -959,15 +959,74 @@ void scenarioTester(){
 }
 
 double generateFile(string testfileName, long int fileSize){
+    auto start = chrono::high_resolution_clock::now(); 
     ofstream tmp(testfileName);
-    int numberOfGrades = rand() % 11;
-    // int numberOfGrades = 10; // for testing 
+    // int numberOfGrades = (rand() % 10)+1;
+    int numberOfGrades = 10; // for testing 
+    tmp << "Vardas          Pavarde          ";
+    for (int i = 0; i < numberOfGrades; i++)
+    {
+        tmp << "ND" << to_string(i+1) << "     ";
+    }
+    tmp << "EGZ." << "\n";
+
+    for (long int i = 0; i < fileSize; i++)
+    {
+        string fname = generateFirstName();
+        string lname = generateLastNames();
+        tmp << fname;
+        for (int i = 0; i < 16-fname.length(); i++)
+        {
+            tmp<<" ";
+        }
+        tmp << lname;
+        for (int i = 0; i < 17-lname.length(); i++)
+        {
+            tmp<<" ";
+        }
+        for (int i = 0; i < numberOfGrades+1; i++)
+        {
+            int grade = (rand() % 11);
+            if (grade > 9)
+            {
+                tmp << " " << grade << "     ";
+            }else{
+                tmp << "  " << grade << "     ";
+            }
+        }
+        tmp << "\n";
+    }
+    tmp.close();
+    auto end = chrono::high_resolution_clock::now();
+    return ((end-start).count())/1000000000.0;
+    
 }
 
 void generateTestFiles(){
     cout << "Starting file generation...\n\n";
     cout << "Generating file \"test1000.txt\" with 1000 students data.\n";
-    cout << "Time taken: " <<  to_string(generateFile("test1000.txt", 1000)) << "\n";
+    double time1 = generateFile("test1000.txt", 1000);
+    cout << "Time taken: " << to_string(time1) << "s\n\n";
+    
+    cout << "Generating file \"test10000.txt\" with 10000 students data.\n";
+    double time2 = generateFile("test10000.txt", 10000);
+    cout << "Time taken: " << to_string(time2) << "s\n\n";
+
+    cout << "Generating file \"test100000.txt\" with 100000 students data.\n";
+    double time3 = generateFile("test100000.txt", 100000);
+    cout << "Time taken: " << to_string(time3) << "s\n\n";
+
+    cout << "Generating file \"test1000000.txt\" with 1000000 students data.\n";
+    double time4 = generateFile("test1000000.txt", 1000000);
+    cout << "Time taken: " << to_string(time4) << "s\n\n";
+
+    cout << "Generating file \"test10000000.txt\" with 10000000 students data.\n";
+    double time5 = generateFile("test10000000.txt", 10000000);
+    cout << "Time taken: " << to_string(time5) << "s\n\n";
+
+    cout << "File generation has finished.\n";
+    cout << "Total time: " << to_string(time1+time2+time3+time4+time5)<< "s\n\n";
+
 }
 
 void dotests(){

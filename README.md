@@ -2,48 +2,73 @@
 
 The provided code is a C++ program for managing student information. It includes functionalities to input student data, calculate averages and medians, and display the results. Below is a summary of the key components and functionalities:
 
-### Struct Definition
+## File Generation Performance Investigation 1
 
-- `studentInfo`: A struct defining the structure of student information, including first name, last name, homework score, exam score, median, average, and modified average.
+The following data represents the time taken to generate files with varying amounts of student data.
 
-### Functions
+| File Name         | Number of Students | Time Taken (s) |
+|-------------------|--------------------|----------------|
+| "test1000.txt"    | 1,000              | 0.006719       |
+| "test10000.txt"   | 10,000             | 0.053824       |
+| "test100000.txt"  | 100,000            | 1.039215       |
+| "test1000000.txt" | 1,000,000          | 6.718065       |
+| "test10000000.txt"| 10,000,000         | 56.34281       |
 
-1. `singleSutdentInfoPrinter`: Prints the information of a single student.
-2. `calculateAverage`: Calculates the weighted average of homework and exam scores.
-3. `findLongestName`: Finds the length of the longest first name among student data.
-4. `findLongestLastname`: Finds the length of the longest last name among student data.
-5. `invalidInput`: Prints a message for invalid input.
-6. `singleInputModule`: Takes input for a single student's information.
-7. `selectionOptionValidator`: Validates the selection for entering data.
-8. `selectionEntryValidator`: Validates the selection for continuing data entry.
-9. `selectionDisplayValidator`: Validates the selection for displaying data.
-10. `resulter`: Displays the student information in a formatted manner.
+Overall, the file generation has completed with the following total time:
 
-### Main Function
+| Description      | Time Taken (s) |
+|------------------|----------------|
+| Total time       | 64.1606644     |
 
-- Handles the execution flow of the program.
-- Provides options for entering data manually or generating data automatically.
-- Calls appropriate functions based on user selections.
+![file generation](/img/1.png "file generation")
 
-## Usage
+## File Processing Performance Investigation 2
 
-1. Compile the code.
-2. Run the executable.
-3. Follow the prompts to enter or generate student data.
-4. View the results displayed in the specified format.
+The following table represents the time taken at each stage of processing files with various numbers of student records.
 
-## Dependencies
+### Test File: test1000.txt
+| Process                    | Time Taken (s) |
+|----------------------------|----------------|
+| Time taken to read file    | 0.007024       |
+| Time to separate students  | 0.001002       |
+| Time to write good students| 0.003000       |
+| Time to write bad students | 0.003229       |
+| **Total time taken**       | 0.014254       |
 
-- `iostream`: Standard input/output stream.
-- `string`: String handling library.
-- `fstream`: File stream for handling file operations.
-- `vector`: Dynamic array implementation for storing student data.
-- `iomanip`: Input/output manipulators for formatting output.
-- `algorithm`: Standard algorithms for operations on sequences.
-- `regex`: Regular expressions for input validation.
+### Test File: test10000.txt
+| Process                    | Time Taken (s) |
+|----------------------------|----------------|
+| Time taken to read file    | 0.065032       |
+| Time to separate students  | 0.006636       |
+| Time to write good students| 0.036107       |
+| Time to write bad students | 0.035537       |
+| **Total time taken**       | 0.142712       |
 
-## Notes
+### Test File: test100000.txt
+| Process                    | Time Taken (s) |
+|----------------------------|----------------|
+| Time taken to read file    | 0.640436       |
+| Time to separate students  | 0.047090       |
+| Time to write good students| 0.373138       |
+| Time to write bad students | 0.435846       |
+| **Total time taken**       | 1.496509       |
 
-- The program is interactive and user-friendly, guiding the user through each step of data entry and display.
-- It employs regular expressions for input validation, ensuring data integrity.
-- The output is neatly formatted, providing clear visibility of student information.
+### Test File: test1000000.txt
+| Process                    | Time Taken (s) |
+|----------------------------|----------------|
+| Time taken to read file    | 6.418524       |
+| Time to separate students  | 0.509076       |
+| Time to write good students| 3.735303       |
+| Time to write bad students | 3.689919       |
+| **Total time taken**       | 14.352821      |
+
+### Test File: test10000000.txt
+| Process                    | Time Taken (s) |
+|----------------------------|----------------|
+| Time taken to read file    | 64.757721      |
+| Time to separate students  | 5.572400       |
+| Time to write good students| 40.514532      |
+| Time to write bad students | 39.176791      |
+| **Total time taken**       | 150.021444     |
+
+![File Processing](/img/2.png "File Processing")

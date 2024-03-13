@@ -94,19 +94,19 @@ customCst sortingAlgo(int selection, customCst data){
     switch (selection)
     {
     case 1:
-        sort(data.begin(), data.end(), compareFisrtName);
+        data.sort(compareFisrtName);
         return data;
         break;
     case 2:
-        sort(data.begin(), data.end(), compareLastName);
+        data.sort(compareLastName);
         return data;
         break;
     case 3:
-        sort(data.begin(), data.end(), compareLastVid);
+        data.sort(compareLastVid);
         return data;
         break;
     case 4:
-        sort(data.begin(), data.end(), compareLastMed);
+        data.sort(compareLastMed);
         return data;
         break;
     default:
@@ -449,7 +449,7 @@ studentInfo singleInputModule(int selection){
                 }
             }
 
-            sort(grades.begin(), grades.end());
+            grades.sort();
 
             int homeWorkToalScore = 0;
             for (int i = 0; i < grades.size(); i++)
@@ -500,7 +500,7 @@ studentInfo singleInputModule(int selection){
             }
             cout << endl << "Auto generated exam score: " << examScore << endl << endl;
 
-            sort(generatedGrades.begin(), generatedGrades.end());
+            generatedGrades.sort();
 
             int homeWorkToalScore = 0;
             for (int i = 0; i < generatedGrades.size(); i++)
@@ -534,7 +534,7 @@ studentInfo singleInputModule(int selection){
             }
             cout << endl << "Auto generated exam score: " << examScore << endl << endl;
 
-            sort(generatedGrades.begin(), generatedGrades.end());
+            generatedGrades.sort();
 
             int homeWorkToalScore = 0;
             for (int i = 0; i < generatedGrades.size(); i++)

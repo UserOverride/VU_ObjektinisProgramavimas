@@ -15,6 +15,9 @@ class customCst {
     void sort(){
         
     };
+    void sort(int selection){
+        
+    };
     void push_back(studentInfo next){
 
     };
@@ -33,6 +36,9 @@ class customCi {
   vector<int> storage;      
   public:             
     void sort(){
+        
+    };
+    void sort(int selection){
         
     };
     void push_back(int next){

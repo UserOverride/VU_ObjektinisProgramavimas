@@ -94,19 +94,19 @@ customCst sortingAlgo(int selection, customCst data){
     switch (selection)
     {
     case 1:
-        data.sort(compareFisrtName);
+        data.sort(1); // compareFisrtName
         return data;
         break;
     case 2:
-        data.sort(compareLastName);
+        data.sort(2); // compareLastName
         return data;
         break;
     case 3:
-        data.sort(compareLastVid);
+        data.sort(3); // compareLastVid
         return data;
         break;
     case 4:
-        data.sort(compareLastMed);
+        data.sort(4); // compareLastMed
         return data;
         break;
     default:

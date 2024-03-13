@@ -11,8 +11,8 @@
 
 using namespace std;
 
-customC<int> generateGrades(){
-    customC<int> grades;
+customCi generateGrades(){
+    customCi grades;
     int numberOfGrades = rand() % 200;
     for (int i = 0; i < numberOfGrades+1; i++)
     {
@@ -90,7 +90,7 @@ void processException() {
     }
 }
 
-customC<studentInfo> sortingAlgo(int selection, customC<studentInfo> data){
+customCst sortingAlgo(int selection, customCst data){
     switch (selection)
     {
     case 1:
@@ -129,7 +129,7 @@ double calculateAverage(double score, double examScore){
     return 0.4 * score + 0.6 * examScore;
 }
 
-int findLongestName(customC<studentInfo> data){
+int findLongestName(customCst data){
     int longestName = 0;
     for (int i = 0; i < data.size(); i++)
     {
@@ -141,7 +141,7 @@ int findLongestName(customC<studentInfo> data){
     return longestName;
 }
 
-int findLongestLastname(customC<studentInfo> data){
+int findLongestLastname(customCst data){
     int longestLastname = 0;
     for (int i = 0; i < data.size(); i++)
     {
@@ -422,7 +422,7 @@ studentInfo singleInputModule(int selection){
     {
         case 1:
         {
-            customC<int> grades;
+            customCi grades;
             int i = 0;
             bool areWeDone = false;
             while (!areWeDone)
@@ -491,7 +491,7 @@ studentInfo singleInputModule(int selection){
         }
         case 2:
         {
-            customC<int> generatedGrades = generateGrades();
+            customCi generatedGrades = generateGrades();
             int examScore = generateExamScore();
 
             cout<< "Auto generated grades: ";
@@ -525,7 +525,7 @@ studentInfo singleInputModule(int selection){
         }
         case 3:
         {
-            customC<int> generatedGrades = generateGrades();
+            customCi generatedGrades = generateGrades();
             int examScore = generateExamScore();
 
             cout<< "Auto generated grades: ";
@@ -564,7 +564,7 @@ studentInfo singleInputModule(int selection){
     return newStudentInfo;
 }
 
-void resulter(customC<studentInfo> allStudentInfo){
+void resulter(customCst allStudentInfo){
     if (allStudentInfo.size() == 0)
     {
         cout << "No data was found..." << endl;
@@ -679,7 +679,7 @@ void resulter(customC<studentInfo> allStudentInfo){
     }
 }
 
-customC<studentInfo> readData(string fileName, int readingType){
+customCst readData(string fileName, int readingType){
     /*
     Reading Type
     1 - word at a time
@@ -690,7 +690,7 @@ customC<studentInfo> readData(string fileName, int readingType){
     {
         if (!fileExistanceValidator(fileName))
         {
-            customC<studentInfo> nothing;
+            customCst nothing;
             return nothing;
         }else{
         
@@ -713,8 +713,8 @@ customC<studentInfo> readData(string fileName, int readingType){
             }
 
 
-            customC<studentInfo> storage;
-            customC<int> gradesStorage;
+            customCst storage;
+            customCi gradesStorage;
             auto start = chrono::high_resolution_clock::now(); 
 
             while(true)
@@ -791,7 +791,7 @@ customC<studentInfo> readData(string fileName, int readingType){
             
 
 
-                sort(gradesStorage.begin(), gradesStorage.end());
+                gradesStorage.sort();
 
                     int homeWorkToalScore = 0;
                     for (int i = 0; i < gradesStorage.size(); i++)
@@ -826,12 +826,12 @@ customC<studentInfo> readData(string fileName, int readingType){
     catch(...)
     {
         processException();
-        customC<studentInfo> nothing;
+        customCst nothing;
         return nothing;
     }
 }
 
-void writeData(customC<studentInfo>  allStudentInfo, string fileName, int spec){
+void writeData(customCst  allStudentInfo, string fileName, int spec){
     
     ofstream outFile(fileName);
     if (allStudentInfo.size() == 0)
@@ -1042,9 +1042,9 @@ void generateTestFiles(){
 
 }
 
-customC<customC<studentInfo>> separate(customC<studentInfo> datas){
-    customC<studentInfo> good;
-    customC<studentInfo> notGood;
+vector<customCst> separate(customCst datas){
+    customCst good;
+    customCst notGood;
     for (int i = 0; i < datas.size(); i++)
     {
         if (datas[i].fisrtname != "")
@@ -1057,7 +1057,7 @@ customC<customC<studentInfo>> separate(customC<studentInfo> datas){
             }
         }
     }
-    customC<customC<studentInfo>> mega;
+    vector<customCst> mega;
     mega.push_back(good);
     mega.push_back(notGood);
     return mega;
@@ -1072,7 +1072,7 @@ void dotests(){
         cout << "Test file name: test" + to_string(vals[i]) + ".txt\n"; 
 
         auto start = chrono::high_resolution_clock::now(); 
-        customC<studentInfo> datas = readData("test" + to_string(vals[i]) + ".txt", 1);
+        customCst datas = readData("test" + to_string(vals[i]) + ".txt", 1);
         auto end = chrono::high_resolution_clock::now();
         double times = ((end-start).count())/1000000000.0;
         totaltime += times;
@@ -1084,7 +1084,7 @@ void dotests(){
             datas[i].average = calculateAverage(datas[i].homeworkScore, datas[i].examScore);
             datas[i].averageM = calculateAverage(datas[i].median, datas[i].examScore);
         }
-        customC<customC<studentInfo>> mega = separate(datas);
+        vector<customCst> mega = separate(datas);
         end = chrono::high_resolution_clock::now();
         times = ((end-start).count())/1000000000.0;
         totaltime += times;

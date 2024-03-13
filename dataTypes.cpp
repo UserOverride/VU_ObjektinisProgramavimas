@@ -8,15 +8,48 @@ struct studentInfo {
     string fisrtname = "", lastname = "";
     double homeworkScore = 0, examScore = 0, median = 0, average = 0, averageM = 0;
 };
-
-class customC {       
+//===================== VECTOR ================
+class customCst {    
+  vector<studentInfo> storage;
   public:             
-    vector<studentInfo> storage;
     void sort(){
         
     };
+    void push_back(studentInfo next){
+
+    };
+    int size(){
+
+    };
+    studentInfo& operator[](int index) {
+        return storage[index];
+    };
+    void clear(){
+
+    };
 };
 
+class customCi { 
+  vector<int> storage;      
+  public:             
+    void sort(){
+        
+    };
+    void push_back(int next){
+
+    }
+    int size(){
+
+    };
+    int& operator[](int index) {
+        return storage[index];
+    };
+    void clear(){
+
+    };
+};
+
+//===================== VECTOR ================
 
 vector<string> availableNames={
 "Katti",

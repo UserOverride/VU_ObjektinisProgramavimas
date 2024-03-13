@@ -8,7 +8,7 @@ using namespace std;
 int runApp(){
     srand(time(0));
 
-    vector<studentInfo> allStudentInfo;
+    customCst allStudentInfo;
     cout << "Hello,\nYou will be asked to enter students data.\nPress Enter to Continue.\n";
     cin.ignore();
     // scenarioTester();

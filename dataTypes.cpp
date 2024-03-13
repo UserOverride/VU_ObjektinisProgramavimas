@@ -9,6 +9,15 @@ struct studentInfo {
     double homeworkScore = 0, examScore = 0, median = 0, average = 0, averageM = 0;
 };
 
+class customC {       
+  public:             
+    vector<studentInfo> storage;
+    void sort(){
+        
+    };
+};
+
+
 vector<string> availableNames={
 "Katti",
 "Lizzie",

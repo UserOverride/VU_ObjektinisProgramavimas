@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <vector>
 #include <iomanip>
 #include <algorithm>
 #include <regex>
@@ -12,8 +11,8 @@
 
 using namespace std;
 
-vector<int> generateGrades(){
-    vector<int> grades;
+customC<int> generateGrades(){
+    customC<int> grades;
     int numberOfGrades = rand() % 200;
     for (int i = 0; i < numberOfGrades+1; i++)
     {
@@ -91,7 +90,7 @@ void processException() {
     }
 }
 
-vector<studentInfo> sortingAlgo(int selection, vector<studentInfo> data){
+customC<studentInfo> sortingAlgo(int selection, customC<studentInfo> data){
     switch (selection)
     {
     case 1:
@@ -130,7 +129,7 @@ double calculateAverage(double score, double examScore){
     return 0.4 * score + 0.6 * examScore;
 }
 
-int findLongestName(vector<studentInfo> data){
+int findLongestName(customC<studentInfo> data){
     int longestName = 0;
     for (int i = 0; i < data.size(); i++)
     {
@@ -142,7 +141,7 @@ int findLongestName(vector<studentInfo> data){
     return longestName;
 }
 
-int findLongestLastname(vector<studentInfo> data){
+int findLongestLastname(customC<studentInfo> data){
     int longestLastname = 0;
     for (int i = 0; i < data.size(); i++)
     {
@@ -423,7 +422,7 @@ studentInfo singleInputModule(int selection){
     {
         case 1:
         {
-            vector<int> grades;
+            customC<int> grades;
             int i = 0;
             bool areWeDone = false;
             while (!areWeDone)
@@ -492,7 +491,7 @@ studentInfo singleInputModule(int selection){
         }
         case 2:
         {
-            vector<int> generatedGrades = generateGrades();
+            customC<int> generatedGrades = generateGrades();
             int examScore = generateExamScore();
 
             cout<< "Auto generated grades: ";
@@ -526,7 +525,7 @@ studentInfo singleInputModule(int selection){
         }
         case 3:
         {
-            vector<int> generatedGrades = generateGrades();
+            customC<int> generatedGrades = generateGrades();
             int examScore = generateExamScore();
 
             cout<< "Auto generated grades: ";
@@ -565,7 +564,7 @@ studentInfo singleInputModule(int selection){
     return newStudentInfo;
 }
 
-void resulter(vector<studentInfo> allStudentInfo){
+void resulter(customC<studentInfo> allStudentInfo){
     if (allStudentInfo.size() == 0)
     {
         cout << "No data was found..." << endl;
@@ -680,7 +679,7 @@ void resulter(vector<studentInfo> allStudentInfo){
     }
 }
 
-vector<studentInfo> readData(string fileName, int readingType){
+customC<studentInfo> readData(string fileName, int readingType){
     /*
     Reading Type
     1 - word at a time
@@ -691,7 +690,7 @@ vector<studentInfo> readData(string fileName, int readingType){
     {
         if (!fileExistanceValidator(fileName))
         {
-            vector<studentInfo> nothing;
+            customC<studentInfo> nothing;
             return nothing;
         }else{
         
@@ -714,8 +713,8 @@ vector<studentInfo> readData(string fileName, int readingType){
             }
 
 
-            vector<studentInfo> storage;
-            vector<int> gradesStorage;
+            customC<studentInfo> storage;
+            customC<int> gradesStorage;
             auto start = chrono::high_resolution_clock::now(); 
 
             while(true)
@@ -827,12 +826,12 @@ vector<studentInfo> readData(string fileName, int readingType){
     catch(...)
     {
         processException();
-        vector<studentInfo> nothing;
+        customC<studentInfo> nothing;
         return nothing;
     }
 }
 
-void writeData(vector<studentInfo>  allStudentInfo, string fileName, int spec){
+void writeData(customC<studentInfo>  allStudentInfo, string fileName, int spec){
     
     ofstream outFile(fileName);
     if (allStudentInfo.size() == 0)
@@ -1043,9 +1042,9 @@ void generateTestFiles(){
 
 }
 
-vector<vector<studentInfo>> separate(vector<studentInfo> datas){
-    vector<studentInfo> good;
-    vector<studentInfo> notGood;
+customC<customC<studentInfo>> separate(customC<studentInfo> datas){
+    customC<studentInfo> good;
+    customC<studentInfo> notGood;
     for (int i = 0; i < datas.size(); i++)
     {
         if (datas[i].fisrtname != "")
@@ -1058,7 +1057,7 @@ vector<vector<studentInfo>> separate(vector<studentInfo> datas){
             }
         }
     }
-    vector<vector<studentInfo>> mega;
+    customC<customC<studentInfo>> mega;
     mega.push_back(good);
     mega.push_back(notGood);
     return mega;
@@ -1073,7 +1072,7 @@ void dotests(){
         cout << "Test file name: test" + to_string(vals[i]) + ".txt\n"; 
 
         auto start = chrono::high_resolution_clock::now(); 
-        vector<studentInfo> datas = readData("test" + to_string(vals[i]) + ".txt", 1);
+        customC<studentInfo> datas = readData("test" + to_string(vals[i]) + ".txt", 1);
         auto end = chrono::high_resolution_clock::now();
         double times = ((end-start).count())/1000000000.0;
         totaltime += times;
@@ -1085,7 +1084,7 @@ void dotests(){
             datas[i].average = calculateAverage(datas[i].homeworkScore, datas[i].examScore);
             datas[i].averageM = calculateAverage(datas[i].median, datas[i].examScore);
         }
-        vector<vector<studentInfo>> mega = separate(datas);
+        customC<customC<studentInfo>> mega = separate(datas);
         end = chrono::high_resolution_clock::now();
         times = ((end-start).count())/1000000000.0;
         totaltime += times;

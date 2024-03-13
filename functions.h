@@ -1,7 +1,6 @@
 #ifndef FUNCTIONS
 #define FUNCTIONS
 
-#include <vector>
 #include <string>
 #include "dataTypes.h"
 

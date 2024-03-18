@@ -22,7 +22,6 @@ public:
 class customCi {       
 public:             
     void sort();
-    void sort(int selection);
     void push_back(int next);
     int size();
     int& operator[](int index);

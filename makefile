@@ -9,4 +9,4 @@ dataTypes:
 special:
 	g++ -c special.cpp
 clean:
-	del *.o *.exe
+	del *.o *.exe resBad*.txt resGood*.txt

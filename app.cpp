@@ -10,10 +10,11 @@ int runApp(){
     srand(time(0));
 
     vector<studentInfo> allStudentInfo;
-    cout << "Hello,\nYou will be asked to enter students data.\nPress Enter to Continue.\n";
-    cin.ignore();
+    dotests();
+    // cout << "Hello,\nYou will be asked to enter students data.\nPress Enter to Continue.\n";
+    // cin.ignore();
     // scenarioTester();
-    bool notDone = true;
+    bool notDone = false;
     while (notDone)
     {
         int selection = selectionOptionValidator();

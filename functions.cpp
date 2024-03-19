@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <list>
+#include <deque>
 #include <algorithm>
 #include <regex>
 #include <fstream>
@@ -32,63 +34,191 @@ bool compareLastMed(const studentInfo &a, const studentInfo &b)
 }
 
 //===================== VECTOR ================
+// class customCst {    
+//   vector<studentInfo> storage;
+//   public:
+//     void sort(int selection){
+//       switch (selection)
+//       {
+//       case 1:
+//         std::sort(storage.begin(), storage.end(), compareFisrtName); 
+//         break;
+//       case 2:
+//         std::sort(storage.begin(), storage.end(), compareLastName); 
+//         break;
+//       case 3:
+//         std::sort(storage.begin(), storage.end(), compareLastVid); 
+//         break;
+//       case 4:
+//         std::sort(storage.begin(), storage.end(), compareLastMed); 
+//         break;
+//       default:
+//         std::sort(storage.begin(), storage.end(), compareLastVid); 
+//         break;
+//       }
+//     };
+//     void push_back(studentInfo next){
+//       storage.push_back(next);
+//     };
+//     int size(){
+//       return storage.size();
+//     };
+//     studentInfo& operator[](int index) {
+//         return storage[index];
+//     };
+//     void clear(){
+//       storage.clear();
+//     };
+// };
+
+// class customCi { 
+//   vector<int> storage;      
+//   public:               
+//     void sort(){
+//         std::sort(storage.begin(), storage.end());
+//     };
+//     void push_back(int next){
+//       storage.push_back(next);
+//     };
+//     int size(){
+//       return storage.size();
+//     };
+//     int& operator[](int index) {
+//         return storage[index];
+//     };
+//     void clear(){
+//       storage.clear();
+//     };
+// };
+//===================== VECTOR ================
+
+//===================== LIST ================
+
+// class customCst {    
+// list<studentInfo> storage;
+// public:
+//   void sort(int selection){
+//     switch (selection)
+//     {
+//     case 1:
+//       storage.sort(compareFisrtName); 
+//       break;
+//     case 2:
+//       storage.sort(compareLastName); 
+//       break;
+//     case 3:
+//       storage.sort(compareLastVid); 
+//       break;
+//     case 4:
+//       storage.sort(compareLastMed); 
+//       break;
+//     default:
+//       storage.sort(compareLastVid); 
+//       break;
+//     }
+//   };
+//   void push_back(studentInfo next){
+//     storage.push_back(next);
+//   };
+//   int size(){
+//     return storage.size();
+//   };
+
+//   void clear(){
+//     storage.clear();
+//   };
+//   studentInfo& operator[](int index) {
+//     auto it = storage.begin();
+//     std::advance(it, index);
+//     return *it;
+//   };
+// };
+// class customCi { 
+// list<int> storage;      
+// public:             
+//   void sort(){
+//     storage.sort();
+//   };
+//   void push_back(int next){
+//     storage.push_back(next);
+//   };
+//   int size(){
+//     return storage.size();
+//   };
+//   void clear(){
+//     storage.clear();
+//   };
+//   int& operator[](int index) {
+//     auto it = storage.begin();
+//     std::advance(it, index);
+//     return *it;
+//   };
+// };
+//===================== LIST ================
+
+//===================== deque ================
 class customCst {    
-  vector<studentInfo> storage;
-  public:
-    void sort(int selection){
-      switch (selection)
-      {
-      case 1:
-        std::sort(storage.begin(), storage.end(), compareFisrtName); 
-        break;
-      case 2:
-        std::sort(storage.begin(), storage.end(), compareLastName); 
-        break;
-      case 3:
-        std::sort(storage.begin(), storage.end(), compareLastVid); 
-        break;
-      case 4:
-        std::sort(storage.begin(), storage.end(), compareLastMed); 
-        break;
-      default:
-        std::sort(storage.begin(), storage.end(), compareLastVid); 
-        break;
-      }
-    };
-    void push_back(studentInfo next){
-      storage.push_back(next);
-    };
-    int size(){
-      return storage.size();
-    };
-    studentInfo& operator[](int index) {
-        return storage[index];
-    };
-    void clear(){
-      storage.clear();
-    };
+deque<studentInfo> storage;
+public:
+  void sort(int selection){
+    switch (selection)
+    {
+    case 1:
+      std::sort(storage.begin(), storage.end(), compareFisrtName); 
+      break;
+    case 2:
+      std::sort(storage.begin(), storage.end(), compareLastName); 
+      break;
+    case 3:
+      std::sort(storage.begin(), storage.end(), compareLastVid); 
+      break;
+    case 4:
+      std::sort(storage.begin(), storage.end(), compareLastMed); 
+      break;
+    default:
+      std::sort(storage.begin(), storage.end(), compareLastVid); 
+      break;
+    }
+  };
+  void push_back(studentInfo next){
+    storage.push_back(next);
+  };
+  int size(){
+    return storage.size();
+  };
+  studentInfo& operator[](int index) {
+      return storage[index];
+  };
+  void clear(){
+    storage.clear();
+  };
+};
+class customCi { 
+  std::deque<int> storage;      
+public:             
+  void sort(){
+    std::sort(storage.begin(), storage.end());
+  };
+  void push_back(int next){
+    storage.push_back(next);
+  };
+  int size(){
+    return storage.size();
+  };
+  int& operator[](int index) {
+      return storage[index];
+  };
+  void clear(){
+    storage.clear();
+  };
+};
+//===================== deque ================
+
+struct superStruct
+{
+    customCst good, bad;
 };
 
-class customCi { 
-  vector<int> storage;      
-  public:             
-    
-    void sort(){
-        std::sort(storage.begin(), storage.end());
-    };
-    void push_back(int next){
-      storage.push_back(next);
-    };
-    int size(){
-      return storage.size();
-    };
-    int& operator[](int index) {
-        return storage[index];
-    };
-    void clear(){
-      storage.clear();
-    };
-};
 
 customCi generateGrades(){
     customCi grades;
@@ -103,14 +233,14 @@ customCi generateGrades(){
 void consoleLog(string data){
     for (int i = 0; i < data.length()+16; i++)
     {
-        cout << "-";
+        std::cout << "-";
     }
-    cout << endl << "\t" << data << endl;
+    std::cout << endl << "\t" << data << endl;
     for (int i = 0; i < data.length()+16; i++)
     {
-        cout << "-";
+        std::cout << "-";
     }
-    cout << endl << endl;
+    std::cout << endl << endl;
 }
 
 int generateExamScore(){
@@ -175,13 +305,13 @@ customCst sortingAlgo(int selection, customCst data){
 }
 
 void singleSutdentInfoPrinter(studentInfo studentInfoToBePrinted){
-    cout<<"Fisrtname: "<<studentInfoToBePrinted.fisrtname<<endl;
-    cout<<"lastname: "<<studentInfoToBePrinted.lastname<<endl;
-    cout<<"homeworkScore: "<<studentInfoToBePrinted.homeworkScore<<endl;
-    cout<<"examScore: "<<studentInfoToBePrinted.examScore<<endl;
-    cout<<"median: "<<studentInfoToBePrinted.median<<endl;
-    cout<<"average: "<<studentInfoToBePrinted.average<<endl;
-    cout<<"averageM: "<<studentInfoToBePrinted.averageM<<endl;
+    std::cout<<"Fisrtname: "<<studentInfoToBePrinted.fisrtname<<endl;
+    std::cout<<"lastname: "<<studentInfoToBePrinted.lastname<<endl;
+    std::cout<<"homeworkScore: "<<studentInfoToBePrinted.homeworkScore<<endl;
+    std::cout<<"examScore: "<<studentInfoToBePrinted.examScore<<endl;
+    std::cout<<"median: "<<studentInfoToBePrinted.median<<endl;
+    std::cout<<"average: "<<studentInfoToBePrinted.average<<endl;
+    std::cout<<"averageM: "<<studentInfoToBePrinted.averageM<<endl;
 }
 
 double calculateAverage(double score, double examScore){
@@ -230,8 +360,8 @@ int selectionOptionValidator(){
     int selection = 0;
     while (!inputTrue)
     {
-        cout << "How would you like to enter data?" << endl;
-        cout << "1 - by hand, 2 - generate grades, 3 - generate grades, first and last names, 4 - read from file, 5 - generate test files, 6 - perform tests 7 - exit program" << endl;
+        std::cout << "How would you like to enter data?" << endl;
+        std::cout << "1 - by hand, 2 - generate grades, 3 - generate grades, first and last names, 4 - read from file, 5 - generate test files, 6 - perform tests 7 - exit program" << endl;
         regex pat {R"(^([1-6]|7))"};
         string tmp = "";
         getline(cin, tmp);
@@ -263,8 +393,8 @@ int selectionSortingValidator(){
     int selection = 0;
     while (!inputTrue)
     {
-        cout << "How would you like the data to be sorted?" << endl;
-        cout << "1 - by firstname, 2 - by lastname, 3 - by last average score, 4 - by last average median score, 5 - do not sort" << endl;
+        std::cout << "How would you like the data to be sorted?" << endl;
+        std::cout << "1 - by firstname, 2 - by lastname, 3 - by last average score, 4 - by last average median score, 5 - do not sort" << endl;
         regex pat {R"(^([1-4]|5))"};
         string tmp = "";
         getline(cin, tmp);
@@ -294,8 +424,8 @@ int selectionEntryValidator(){
     int selection = 0;
     while (!inputTrue)
     {
-        cout << "Are you done with data entry?" << endl;
-        cout << "1 - no, 2 - yes" << endl;
+        std::cout << "Are you done with data entry?" << endl;
+        std::cout << "1 - no, 2 - yes" << endl;
         regex pat {R"(^(1|2))"};
         string tmp = "";
         getline(cin, tmp);
@@ -325,8 +455,8 @@ int selectionOutputValidator(){
     int selection = 0;
     while (!inputTrue)
     {
-        cout << "How would you like to see the data?" << endl;
-        cout << "1 - In Terminal, 2 - Writen to file" << endl;
+        std::cout << "How would you like to see the data?" << endl;
+        std::cout << "1 - In Terminal, 2 - Writen to file" << endl;
         regex pat {R"(^(1|2))"};
         string tmp = "";
         getline(cin, tmp);
@@ -356,7 +486,7 @@ int selectionGenerationValidator(){
     int selection = 0;
     while (!inputTrue)
     {
-        cout << "How many students data should be generated? (1-1000)" << endl;
+        std::cout << "How many students data should be generated? (1-1000)" << endl;
         regex pat {R"(^([1-9]|[1-9][0-9]{1,2}|1000))"};
         string tmp = "";
         getline(cin, tmp);
@@ -386,8 +516,8 @@ int selectionDisplayValidator(){
     int selection = 0;
     while (!inputTrue)
     {
-        cout << endl << "How would you like to see the data?" << endl;
-        cout << "1 - \"Galutinis(Vid.)\", 2 - \"Galutinis(Med.)\", 3 - \"Galutinis(Vid.) / Galutinis(Med.)\"" << endl;
+        std::cout << endl << "How would you like to see the data?" << endl;
+        std::cout << "1 - \"Galutinis(Vid.)\", 2 - \"Galutinis(Med.)\", 3 - \"Galutinis(Vid.) / Galutinis(Med.)\"" << endl;
         regex pat {R"(^([1-2]|3))"};
         string tmp = "";
         getline(cin, tmp);
@@ -424,7 +554,7 @@ studentInfo singleInputModule(int selection){
             while (!nameValid)
             {
                 regex pat {R"(^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?))"};
-                cout<<"Please enter fullname of the student: "<<endl;
+                std::cout<<"Please enter fullname of the student: "<<endl;
                 string tmp = "";
                 getline(cin, tmp);
                 smatch sm;
@@ -447,7 +577,7 @@ studentInfo singleInputModule(int selection){
             while (!nameValid)
             {
                 regex pat {R"(^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?))"};
-                cout<<"Please enter fullname of the student: "<<endl;
+                std::cout<<"Please enter fullname of the student: "<<endl;
                 string tmp = "";
                 getline(cin, tmp);
                 smatch sm;
@@ -468,7 +598,7 @@ studentInfo singleInputModule(int selection){
         {
             string firstName = generateFirstName();
             string lastName = generateLastNames();
-            cout<< "Generated name: " << firstName << " " << lastName << endl;
+            std::cout<< "Generated name: " << firstName << " " << lastName << endl;
             newStudentInfo.fisrtname = firstName;
             newStudentInfo.lastname = lastName;
             break;
@@ -486,7 +616,7 @@ studentInfo singleInputModule(int selection){
             bool areWeDone = false;
             while (!areWeDone)
             {
-                cout<<"Please enter the grade number " << i+1 << ": "<<endl;
+                std::cout<<"Please enter the grade number " << i+1 << ": "<<endl;
                 regex patGrade {R"(^([0-9]|10))"};
                 bool singleGradeInvalid = false;
                 while (!singleGradeInvalid)
@@ -533,7 +663,7 @@ studentInfo singleInputModule(int selection){
             while (!examScoreValid)
             {
                 regex pat {R"(^([0-9]|10))"};
-                cout<<"Please enter the students exam score: "<<endl;
+                std::cout<<"Please enter the students exam score: "<<endl;
                 string tmp = "";
                 getline(cin, tmp);
                 smatch sm;
@@ -553,11 +683,11 @@ studentInfo singleInputModule(int selection){
             customCi generatedGrades = generateGrades();
             int examScore = generateExamScore();
 
-            cout<< "Auto generated grades: ";
+            std::cout<< "Auto generated grades: ";
             for(int i = 0; i < generatedGrades.size(); i++){
-                cout << generatedGrades[i] << " ";
+                std::cout << generatedGrades[i] << " ";
             }
-            cout << endl << "Auto generated exam score: " << examScore << endl << endl;
+            std::cout << endl << "Auto generated exam score: " << examScore << endl << endl;
 
             generatedGrades.sort();
 
@@ -587,11 +717,11 @@ studentInfo singleInputModule(int selection){
             customCi generatedGrades = generateGrades();
             int examScore = generateExamScore();
 
-            cout<< "Auto generated grades: ";
+            std::cout<< "Auto generated grades: ";
             for(int i = 0; i < generatedGrades.size(); i++){
-                cout << generatedGrades[i] << " ";
+                std::cout << generatedGrades[i] << " ";
             }
-            cout << endl << "Auto generated exam score: " << examScore << endl << endl;
+            std::cout << endl << "Auto generated exam score: " << examScore << endl << endl;
 
             generatedGrades.sort();
 
@@ -626,7 +756,7 @@ studentInfo singleInputModule(int selection){
 void resulter(customCst allStudentInfo){
     if (allStudentInfo.size() == 0)
     {
-        cout << "No data was found..." << endl;
+        std::cout << "No data was found..." << endl;
     }else{
         for (int i = 0; i < allStudentInfo.size(); i++)
         {
@@ -638,99 +768,99 @@ void resulter(customCst allStudentInfo){
         int longestLastname = findLongestLastname(allStudentInfo);
         int selection = selectionDisplayValidator();
 
-         cout << "Pavarde";
+         std::cout << "Pavarde";
         if (longestLastname<10)
         {
-            cout << "   ";
+            std::cout << "   ";
         }else{
             for (int i = 0; i < longestLastname-7+2; i++)
             {
-                cout << " ";
+                std::cout << " ";
             }
         }
         
-        cout << "Vardas";
+        std::cout << "Vardas";
         if (longestName < 9)
         {
-            cout << "   ";
+            std::cout << "   ";
         }else{
             for (int i = 0; i < longestName-6+2; i++)
             {
-                cout << " ";
+                std::cout << " ";
             }
         }
 
         switch (selection)
         {
         case 1:
-            cout << "Galutinis (Vid).\n";
+            std::cout << "Galutinis (Vid).\n";
             for (int i = 0; i < longestName+2+longestLastname+2; i++)
             {
-                cout << "-";
+                std::cout << "-";
             }
-            cout << "-----------------" << endl;
+            std::cout << "-----------------" << endl;
             break;
         case 2:
-            cout << "Galutinis (Med).\n";
+            std::cout << "Galutinis (Med).\n";
             for (int i = 0; i < longestName+2+longestLastname+2; i++)
             {
-                cout << "-";
+                std::cout << "-";
             }
-            cout << "-----------------" << endl;
+            std::cout << "-----------------" << endl;
             break;
         case 3:
-            cout << "Galutinis (Vid). / Galutinis (Med).\n";
+            std::cout << "Galutinis (Vid). / Galutinis (Med).\n";
             for (int i = 0; i < longestName+2+longestLastname+2; i++)
             {
-                cout << "-";
+                std::cout << "-";
             }
-            cout << "-----------------------------------" << endl;
+            std::cout << "-----------------------------------" << endl;
         break;
         }
 
         for (int i = 0; i < allStudentInfo.size(); i++)
         {
-            cout << allStudentInfo[i].lastname;
+            std::cout << allStudentInfo[i].lastname;
             if (longestLastname < 10)
             {
                 for (int y = 0; y < (10 - allStudentInfo[i].lastname.length()); y++)
                 {
-                    cout << " ";
+                    std::cout << " ";
                 }
             }else{
                 for (int y = 0; y < (longestLastname - allStudentInfo[i].lastname.length())+2; y++)
                 {
-                    cout << " ";
+                    std::cout << " ";
                 }
             }
             
-            cout << allStudentInfo[i].fisrtname;
+            std::cout << allStudentInfo[i].fisrtname;
             if (longestName < 9)
             {
                 for (int y = 0; y < (9 - allStudentInfo[i].fisrtname.length()); y++)
                 {
-                    cout << " ";
+                    std::cout << " ";
                 }
             }else{
                 for (int y = 0; y < (longestName - allStudentInfo[i].fisrtname.length())+2; y++)
                 {
-                    cout << " ";
+                    std::cout << " ";
                 }
             }
             
             switch (selection)
             {
             case 1:
-                cout<< fixed << setprecision(2) << allStudentInfo[i].average << endl;
+                std::cout<< fixed << setprecision(2) << allStudentInfo[i].average << endl;
                 break;
             case 2:
-                cout<< fixed << setprecision(2) << allStudentInfo[i].averageM << endl;
+                std::cout<< fixed << setprecision(2) << allStudentInfo[i].averageM << endl;
                 break;
             case 3:
                 if(allStudentInfo[i].average == 10){
-                    cout<< fixed << setprecision(2) << allStudentInfo[i].average << "              " << allStudentInfo[i].averageM << endl;
+                    std::cout<< fixed << setprecision(2) << allStudentInfo[i].average << "              " << allStudentInfo[i].averageM << endl;
                 }else{
-                    cout<< fixed << setprecision(2) << allStudentInfo[i].average << "               " << allStudentInfo[i].averageM << endl;
+                    std::cout<< fixed << setprecision(2) << allStudentInfo[i].average << "               " << allStudentInfo[i].averageM << endl;
                 }
                 break;
             }
@@ -1020,7 +1150,7 @@ void writeData(customCst  allStudentInfo, string fileName, int spec){
             }
         }   
     }
-    // cout << endl << "Done" << endl << "Results writen to file results.txt" << endl ;
+    // std::cout << endl << "Done" << endl << "Results writen to file results.txt" << endl ;
 }
 
 void scenarioTester(){
@@ -1076,33 +1206,33 @@ double generateFile(string testfileName, long int fileSize){
 }
 
 void generateTestFiles(){
-    cout << "Starting file generation...\n\n";
-    cout << "Generating file \"test1000.txt\" with 1000 students data.\n";
+    std::cout << "Starting file generation...\n\n";
+    std::cout << "Generating file \"test1000.txt\" with 1000 students data.\n";
     double time1 = generateFile("test1000.txt", 1000);
-    cout << "Time taken: " << to_string(time1) << "s\n\n";
+    std::cout << "Time taken: " << to_string(time1) << "s\n\n";
     
-    cout << "Generating file \"test10000.txt\" with 10000 students data.\n";
+    std::cout << "Generating file \"test10000.txt\" with 10000 students data.\n";
     double time2 = generateFile("test10000.txt", 10000);
-    cout << "Time taken: " << to_string(time2) << "s\n\n";
+    std::cout << "Time taken: " << to_string(time2) << "s\n\n";
 
-    cout << "Generating file \"test100000.txt\" with 100000 students data.\n";
+    std::cout << "Generating file \"test100000.txt\" with 100000 students data.\n";
     double time3 = generateFile("test100000.txt", 100000);
-    cout << "Time taken: " << to_string(time3) << "s\n\n";
+    std::cout << "Time taken: " << to_string(time3) << "s\n\n";
 
-    cout << "Generating file \"test1000000.txt\" with 1000000 students data.\n";
+    std::cout << "Generating file \"test1000000.txt\" with 1000000 students data.\n";
     double time4 = generateFile("test1000000.txt", 1000000);
-    cout << "Time taken: " << to_string(time4) << "s\n\n";
+    std::cout << "Time taken: " << to_string(time4) << "s\n\n";
 
-    cout << "Generating file \"test10000000.txt\" with 10000000 students data.\n";
+    std::cout << "Generating file \"test10000000.txt\" with 10000000 students data.\n";
     double time5 = generateFile("test10000000.txt", 10000000);
-    cout << "Time taken: " << to_string(time5) << "s\n\n";
+    std::cout << "Time taken: " << to_string(time5) << "s\n\n";
 
-    cout << "File generation has finished.\n";
-    cout << "Total time: " << to_string(time1+time2+time3+time4+time5)<< "s\n\n";
+    std::cout << "File generation has finished.\n";
+    std::cout << "Total time: " << to_string(time1+time2+time3+time4+time5)<< "s\n\n";
 
 }
 
-vector<customCst> separate(customCst datas){
+superStruct separate(customCst datas){
     customCst good;
     customCst notGood;
     for (int i = 0; i < datas.size(); i++)
@@ -1117,58 +1247,112 @@ vector<customCst> separate(customCst datas){
             }
         }
     }
-    vector<customCst> mega;
-    mega.push_back(good);
-    mega.push_back(notGood);
+    superStruct mega;
+    mega.good = good;
+    mega.bad = notGood;
     return mega;
     
 }
 
 void dotests(){
     int vals[] = {1000, 10000, 100000, 1000000, 10000000};
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 3; i++)
     {   
         double totaltime = 0;
-        cout << "Test file name: test" + to_string(vals[i]) + ".txt\n"; 
+        std::cout << "Test file name: test" + to_string(vals[i]) + ".txt\n"; 
 
         auto start = chrono::high_resolution_clock::now(); 
         customCst datas = readData("test" + to_string(vals[i]) + ".txt", 1);
         auto end = chrono::high_resolution_clock::now();
         double times = ((end-start).count())/1000000000.0;
         totaltime += times;
-        cout << "Time taken to read file: " + to_string(times) + "s\n";
+        std::cout << "Time taken to read file: " + to_string(times) + "s\n";
 
         start = chrono::high_resolution_clock::now(); 
         for (int i = 0; i < datas.size(); i++)
         {
             datas[i].average = calculateAverage(datas[i].homeworkScore, datas[i].examScore);
-            datas[i].averageM = calculateAverage(datas[i].median, datas[i].examScore);
+            // datas[i].averageM = calculateAverage(datas[i].median, datas[i].examScore);
         }
-        vector<customCst> mega = separate(datas);
-        end = chrono::high_resolution_clock::now();
-        times = ((end-start).count())/1000000000.0;
-        totaltime += times;
-        cout << "Time seperate students: " + to_string(times) + "s\n";
+        switch (1)
+        {
+        case 1:
+        {
+            superStruct mega = separate(datas);
+            end = chrono::high_resolution_clock::now();
+            times = ((end-start).count())/1000000000.0;
+            totaltime += times;
+            std::cout << "Time seperate students: " + to_string(times) + "s\n";
+
+            start = chrono::high_resolution_clock::now(); 
+            writeData(mega.good, "resGood" + to_string(vals[i]) + ".txt", 2);
+            end = chrono::high_resolution_clock::now();
+            times = ((end-start).count())/1000000000.0;
+            totaltime += times;
+            std::cout << "Time taken to write good students: " + to_string(times) + "s\n";
+
+            start = chrono::high_resolution_clock::now(); 
+            writeData(mega.bad, "resBad" + to_string(vals[i]) + ".txt", 2);
+            end = chrono::high_resolution_clock::now();
+            times = ((end-start).count())/1000000000.0;
+            totaltime += times;
+            std::cout << "Time taken to write bad students: " + to_string(times) + "s\n";
+            break;
+        }
+        case 2:
+        {
+            superStruct mega = separate(datas);
+            end = chrono::high_resolution_clock::now();
+            times = ((end-start).count())/1000000000.0;
+            totaltime += times;
+            std::cout << "Time seperate students: " + to_string(times) + "s\n";
+
+            start = chrono::high_resolution_clock::now(); 
+            writeData(mega.good, "resGood" + to_string(vals[i]) + ".txt", 2);
+            end = chrono::high_resolution_clock::now();
+            times = ((end-start).count())/1000000000.0;
+            totaltime += times;
+            std::cout << "Time taken to write good students: " + to_string(times) + "s\n";
+
+            start = chrono::high_resolution_clock::now(); 
+            writeData(mega.bad, "resBad" + to_string(vals[i]) + ".txt", 2);
+            end = chrono::high_resolution_clock::now();
+            times = ((end-start).count())/1000000000.0;
+            totaltime += times;
+            std::cout << "Time taken to write bad students: " + to_string(times) + "s\n";
+            break;
+        }
+        case 3:
+        {
+            superStruct mega = separate(datas);
+            end = chrono::high_resolution_clock::now();
+            times = ((end-start).count())/1000000000.0;
+            totaltime += times;
+            std::cout << "Time seperate students: " + to_string(times) + "s\n";
+
+            start = chrono::high_resolution_clock::now(); 
+            writeData(mega.good, "resGood" + to_string(vals[i]) + ".txt", 2);
+            end = chrono::high_resolution_clock::now();
+            times = ((end-start).count())/1000000000.0;
+            totaltime += times;
+            std::cout << "Time taken to write good students: " + to_string(times) + "s\n";
+
+            start = chrono::high_resolution_clock::now(); 
+            writeData(mega.bad, "resBad" + to_string(vals[i]) + ".txt", 2);
+            end = chrono::high_resolution_clock::now();
+            times = ((end-start).count())/1000000000.0;
+            totaltime += times;
+            std::cout << "Time taken to write bad students: " + to_string(times) + "s\n";
+            break;
+        }
+        }
+        
 
         start = chrono::high_resolution_clock::now(); 
-        writeData(mega[0], "resGood" + to_string(vals[i]) + ".txt", 2);
         end = chrono::high_resolution_clock::now();
         times = ((end-start).count())/1000000000.0;
         totaltime += times;
-        cout << "Time taken to write good students: " + to_string(times) + "s\n";
-
-        start = chrono::high_resolution_clock::now(); 
-        writeData(mega[1], "resBad" + to_string(vals[i]) + ".txt", 2);
-        end = chrono::high_resolution_clock::now();
-        times = ((end-start).count())/1000000000.0;
-        totaltime += times;
-        cout << "Time taken to write bad students: " + to_string(times) + "s\n";
-
-        start = chrono::high_resolution_clock::now(); 
-        end = chrono::high_resolution_clock::now();
-        times = ((end-start).count())/1000000000.0;
-        totaltime += times;
-        cout << "Total time taken: " + to_string(totaltime) + "s\n\n\n";
+        std::cout << "Total time taken: " + to_string(totaltime) + "s\n\n\n";
     }
     
 }

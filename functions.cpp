@@ -34,45 +34,12 @@ bool compareLastMed(const studentInfo &a, const studentInfo &b)
 }
 
 //===================== VECTOR ================
-// class customCst {    
-//   vector<studentInfo> storage;
-//   public:
-//     void sort(int selection){
-//       switch (selection)
-//       {
-//       case 1:
-//         std::sort(storage.begin(), storage.end(), compareFisrtName); 
-//         break;
-//       case 2:
-//         std::sort(storage.begin(), storage.end(), compareLastName); 
-//         break;
-//       case 3:
-//         std::sort(storage.begin(), storage.end(), compareLastVid); 
-//         break;
-//       case 4:
-//         std::sort(storage.begin(), storage.end(), compareLastMed); 
-//         break;
-//       default:
-//         std::sort(storage.begin(), storage.end(), compareLastVid); 
-//         break;
-//       }
-//     };
-//     void push_back(studentInfo next){
-//       storage.push_back(next);
-//     };
-//     int size(){
-//       return storage.size();
-//     };
-//     studentInfo& operator[](int index) {
-//         return storage[index];
-//     };
-//     void clear(){
-//       storage.clear();
-//     };
-// };
 //  class customCst {    
-//   vector<studentInfo> storage;
 //   public:
+//   vector<studentInfo> storage;
+//     void deleteE(int i) {
+//         storage.erase(storage.begin() + i);
+//     };
 //     void sort(int selection){
 //       switch (selection)
 //       {
@@ -108,7 +75,10 @@ bool compareLastMed(const studentInfo &a, const studentInfo &b)
 // };
 // class customCi { 
 //   vector<int> storage;      
-//   public:               
+//   public:           
+//        void reverseSort(){
+//          std::sort(storage.rbegin(), storage.rend());
+//        };      
 //     void sort(){
 //         std::sort(storage.begin(), storage.end());
 //     };
@@ -129,8 +99,13 @@ bool compareLastMed(const studentInfo &a, const studentInfo &b)
 
 //===================== LIST ================
 // class customCst {    
-// list<studentInfo> storage;
 // public:
+// list<studentInfo> storage;
+//     void deleteE(int i) {
+//         auto it = storage.begin();
+//         std::advance(it, i); 
+//         storage.erase(it); 
+//     }
 //   void sort(int selection){
 //     switch (selection)
 //     {
@@ -168,7 +143,13 @@ bool compareLastMed(const studentInfo &a, const studentInfo &b)
 // };
 // class customCi { 
 // list<int> storage;      
-// public:             
+// public:       
+//     void reverseSort() {
+//         // Sorts the list in descending order using a lambda that returns true if the first argument is greater than the second
+//         storage.sort([](const int& a, const int& b) {
+//             return a > b;
+//         });
+//     };      
 //   void sort(){
 //     storage.sort();
 //   };
@@ -191,8 +172,13 @@ bool compareLastMed(const studentInfo &a, const studentInfo &b)
 
 //===================== deque ================
 class customCst {    
-deque<studentInfo> storage;
 public:
+deque<studentInfo> storage;
+  void deleteE(int i){
+    auto it = storage.begin();
+    std::advance(it, i); 
+    storage.erase(it);
+  };
   void sort(int selection){
     switch (selection)
     {
@@ -228,7 +214,10 @@ public:
 };
 class customCi { 
   std::deque<int> storage;      
-public:             
+public:         
+  void reverseSort(){
+    std::sort(storage.rbegin(), storage.rend());
+  };   
   void sort(){
     std::sort(storage.begin(), storage.end());
   };
@@ -1265,7 +1254,7 @@ void generateTestFiles(){
 
 }
 
-superStruct separate(customCst datas){
+superStruct separate1(customCst datas){
     customCst good;
     customCst notGood;
     for (int i = 0; i < datas.size(); i++)
@@ -1284,7 +1273,59 @@ superStruct separate(customCst datas){
     mega.good = good;
     mega.bad = notGood;
     return mega;
+}
+
+superStruct separate2(customCst datas){
+    customCi good;
+    customCst notGood;
+    for (int i = 0; i < datas.size(); i++)
+    {
+        if (datas[i].fisrtname != "")
+        {
+            if (datas[i].average < 5)
+            {
+                notGood.push_back(datas[i]);
+                good.push_back(i);
+            }
+        }else{
+            good.push_back(i);
+        }
+    }
+    good.reverseSort();
+    for (int i = 0; i < good.size(); i++)
+    {
+        datas.deleteE(good[i]);
+    }
     
+    superStruct mega;
+    mega.good = datas;
+    mega.bad = notGood;
+    return mega;
+}
+
+superStruct separate3(customCst datas) {
+    auto it = std::stable_partition(datas.storage.begin(), datas.storage.end(), [](const studentInfo& studentInfo) {
+        return studentInfo.fisrtname != "" && studentInfo.average >= 5;
+    });
+
+    customCst good;
+    customCst notGood;
+    for (int i = 0; i < datas.size(); i++)
+    {
+        if (datas[i].fisrtname != "")
+        {
+            if (datas[i].average < 5)
+            {
+                notGood.push_back(datas[i]);
+            }else{
+                good.push_back(datas[i]);
+            }
+        }
+    }
+    superStruct mega;
+    mega.good = good;
+    mega.bad = notGood;
+    return mega;
 }
 
 void dotests(){
@@ -1307,11 +1348,11 @@ void dotests(){
             datas[i].average = calculateAverage(datas[i].homeworkScore, datas[i].examScore);
             // datas[i].averageM = calculateAverage(datas[i].median, datas[i].examScore);
         }
-        switch (1)
+        switch (3)
         {
         case 1:
         {
-            superStruct mega = separate(datas);
+            superStruct mega = separate1(datas);
             end = chrono::high_resolution_clock::now();
             times = ((end-start).count())/1000000000.0;
             totaltime += times;
@@ -1334,7 +1375,7 @@ void dotests(){
         }
         case 2:
         {
-            superStruct mega = separate(datas);
+            superStruct mega = separate2(datas);
             end = chrono::high_resolution_clock::now();
             times = ((end-start).count())/1000000000.0;
             totaltime += times;
@@ -1357,7 +1398,7 @@ void dotests(){
         }
         case 3:
         {
-            superStruct mega = separate(datas);
+            superStruct mega = separate3(datas);
             end = chrono::high_resolution_clock::now();
             times = ((end-start).count())/1000000000.0;
             totaltime += times;

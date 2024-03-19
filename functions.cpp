@@ -70,30 +70,65 @@ bool compareLastMed(const studentInfo &a, const studentInfo &b)
 //       storage.clear();
 //     };
 // };
+ class customCst {    
+  vector<studentInfo> storage;
+  public:
+    void sort(int selection){
+      switch (selection)
+      {
+      case 1:
+        std::sort(storage.begin(), storage.end(), compareFisrtName); 
+        break;
+      case 2:
+        std::sort(storage.begin(), storage.end(), compareLastName); 
+        break;
+      case 3:
+        std::sort(storage.begin(), storage.end(), compareLastVid); 
+        break;
+      case 4:
+        std::sort(storage.begin(), storage.end(), compareLastMed); 
+        break;
+      default:
+        std::sort(storage.begin(), storage.end(), compareLastVid); 
+        break;
+      }
+    };
+    void push_back(studentInfo next){
+      storage.push_back(next);
+    };
+    int size(){
+      return storage.size();
+    };
+    studentInfo& operator[](int index) {
+        return storage[index];
+    };
+    void clear(){
+      storage.clear();
+    };
+};
 
-// class customCi { 
-//   vector<int> storage;      
-//   public:               
-//     void sort(){
-//         std::sort(storage.begin(), storage.end());
-//     };
-//     void push_back(int next){
-//       storage.push_back(next);
-//     };
-//     int size(){
-//       return storage.size();
-//     };
-//     int& operator[](int index) {
-//         return storage[index];
-//     };
-//     void clear(){
-//       storage.clear();
-//     };
-// };
+class customCi { 
+  vector<int> storage;      
+  public:               
+    void sort(){
+        std::sort(storage.begin(), storage.end());
+    };
+    void push_back(int next){
+      storage.push_back(next);
+    };
+    int size(){
+      return storage.size();
+    };
+    int& operator[](int index) {
+        return storage[index];
+    };
+    void clear(){
+      storage.clear();
+    };
+};
 //===================== VECTOR ================
 
 //===================== LIST ================
-
 // class customCst {    
 // list<studentInfo> storage;
 // public:
@@ -123,7 +158,6 @@ bool compareLastMed(const studentInfo &a, const studentInfo &b)
 //   int size(){
 //     return storage.size();
 //   };
-
 //   void clear(){
 //     storage.clear();
 //   };
@@ -157,61 +191,61 @@ bool compareLastMed(const studentInfo &a, const studentInfo &b)
 //===================== LIST ================
 
 //===================== deque ================
-class customCst {    
-deque<studentInfo> storage;
-public:
-  void sort(int selection){
-    switch (selection)
-    {
-    case 1:
-      std::sort(storage.begin(), storage.end(), compareFisrtName); 
-      break;
-    case 2:
-      std::sort(storage.begin(), storage.end(), compareLastName); 
-      break;
-    case 3:
-      std::sort(storage.begin(), storage.end(), compareLastVid); 
-      break;
-    case 4:
-      std::sort(storage.begin(), storage.end(), compareLastMed); 
-      break;
-    default:
-      std::sort(storage.begin(), storage.end(), compareLastVid); 
-      break;
-    }
-  };
-  void push_back(studentInfo next){
-    storage.push_back(next);
-  };
-  int size(){
-    return storage.size();
-  };
-  studentInfo& operator[](int index) {
-      return storage[index];
-  };
-  void clear(){
-    storage.clear();
-  };
-};
-class customCi { 
-  std::deque<int> storage;      
-public:             
-  void sort(){
-    std::sort(storage.begin(), storage.end());
-  };
-  void push_back(int next){
-    storage.push_back(next);
-  };
-  int size(){
-    return storage.size();
-  };
-  int& operator[](int index) {
-      return storage[index];
-  };
-  void clear(){
-    storage.clear();
-  };
-};
+// class customCst {    
+// deque<studentInfo> storage;
+// public:
+//   void sort(int selection){
+//     switch (selection)
+//     {
+//     case 1:
+//       std::sort(storage.begin(), storage.end(), compareFisrtName); 
+//       break;
+//     case 2:
+//       std::sort(storage.begin(), storage.end(), compareLastName); 
+//       break;
+//     case 3:
+//       std::sort(storage.begin(), storage.end(), compareLastVid); 
+//       break;
+//     case 4:
+//       std::sort(storage.begin(), storage.end(), compareLastMed); 
+//       break;
+//     default:
+//       std::sort(storage.begin(), storage.end(), compareLastVid); 
+//       break;
+//     }
+//   };
+//   void push_back(studentInfo next){
+//     storage.push_back(next);
+//   };
+//   int size(){
+//     return storage.size();
+//   };
+//   studentInfo& operator[](int index) {
+//       return storage[index];
+//   };
+//   void clear(){
+//     storage.clear();
+//   };
+// };
+// class customCi { 
+//   std::deque<int> storage;      
+// public:             
+//   void sort(){
+//     std::sort(storage.begin(), storage.end());
+//   };
+//   void push_back(int next){
+//     storage.push_back(next);
+//   };
+//   int size(){
+//     return storage.size();
+//   };
+//   int& operator[](int index) {
+//       return storage[index];
+//   };
+//   void clear(){
+//     storage.clear();
+//   };
+// };
 //===================== deque ================
 
 struct superStruct
@@ -1256,7 +1290,7 @@ superStruct separate(customCst datas){
 
 void dotests(){
     int vals[] = {1000, 10000, 100000, 1000000, 10000000};
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 5; i++)
     {   
         double totaltime = 0;
         std::cout << "Test file name: test" + to_string(vals[i]) + ".txt\n"; 

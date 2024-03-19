@@ -11,6 +11,85 @@
 
 using namespace std;
 
+bool compareFisrtName(const studentInfo &a, const studentInfo &b)
+{
+    return a.fisrtname < b.fisrtname;
+}
+
+bool compareLastName(const studentInfo &a, const studentInfo &b)
+{
+    return a.lastname < b.lastname;
+}
+
+bool compareLastVid(const studentInfo &a, const studentInfo &b)
+{
+    return a.average < b.average;
+}
+
+bool compareLastMed(const studentInfo &a, const studentInfo &b)
+{
+    return a.averageM < b.averageM;
+}
+
+//===================== VECTOR ================
+class customCst {    
+  vector<studentInfo> storage;
+  public:
+    void sort(int selection){
+      switch (selection)
+      {
+      case 1:
+        std::sort(storage.begin(), storage.end(), compareFisrtName); 
+        break;
+      case 2:
+        std::sort(storage.begin(), storage.end(), compareLastName); 
+        break;
+      case 3:
+        std::sort(storage.begin(), storage.end(), compareLastVid); 
+        break;
+      case 4:
+        std::sort(storage.begin(), storage.end(), compareLastMed); 
+        break;
+      default:
+        std::sort(storage.begin(), storage.end(), compareLastVid); 
+        break;
+      }
+    };
+    void push_back(studentInfo next){
+      storage.push_back(next);
+    };
+    int size(){
+      return storage.size();
+    };
+    studentInfo& operator[](int index) {
+        return storage[index];
+    };
+    void clear(){
+      storage.clear();
+    };
+};
+
+class customCi { 
+  vector<int> storage;      
+  public:             
+    
+    void sort(){
+        std::sort(storage.begin(), storage.end());
+    };
+    void push_back(int next){
+      storage.push_back(next);
+    };
+    int size(){
+      return storage.size();
+    };
+    int& operator[](int index) {
+        return storage[index];
+    };
+    void clear(){
+      storage.clear();
+    };
+};
+
 customCi generateGrades(){
     customCi grades;
     int numberOfGrades = rand() % 200;
@@ -44,26 +123,6 @@ string generateFirstName(){
 
 string generateLastNames(){
     return availableLastnames[rand() % 1000];
-}
-
-bool compareFisrtName(const studentInfo &a, const studentInfo &b)
-{
-    return a.fisrtname < b.fisrtname;
-}
-
-bool compareLastName(const studentInfo &a, const studentInfo &b)
-{
-    return a.lastname < b.lastname;
-}
-
-bool compareLastVid(const studentInfo &a, const studentInfo &b)
-{
-    return a.average < b.average;
-}
-
-bool compareLastMed(const studentInfo &a, const studentInfo &b)
-{
-    return a.averageM < b.averageM;
 }
 
 bool fileExistanceValidator (string fileName) {
@@ -792,6 +851,7 @@ customCst readData(string fileName, int readingType){
 
 
                 gradesStorage.sort();
+                
 
                     int homeWorkToalScore = 0;
                     for (int i = 0; i < gradesStorage.size(); i++)

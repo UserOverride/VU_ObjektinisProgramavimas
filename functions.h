@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "dataTypes.h"
+#include "special.h"
 
 using namespace std;
 
@@ -11,16 +12,12 @@ vector<int> generateGrades();
 int generateExamScore();
 std::string generateFirstName();
 std::string generateLastNames();
-bool compareFisrtName(const studentInfo &a, const studentInfo &b);
-bool compareLastName(const studentInfo &a, const studentInfo &b);
-bool compareLastVid(const studentInfo &a, const studentInfo &b);
-bool compareLastMed(const studentInfo &a, const studentInfo &b);
 bool fileExistanceValidator(std::string fileName);
-// vector<studentInfo> sortingAlgo(int selection, vector<studentInfo> data);
+customCst sortingAlgo(int selection, customCst data);
 void singleSutdentInfoPrinter(studentInfo studentInfoToBePrinted);
 double calculateAverage(double score, double examScore);
-int findLongestName(vector<studentInfo> data);
-int findLongestLastname(vector<studentInfo> data);
+int findLongestName(customCst data);
+int findLongestLastname(customCst data);
 void invalidInput();
 int selectionOptionValidator();
 int selectionSortingValidator();
@@ -29,10 +26,10 @@ int selectionOutputValidator();
 int selectionGenerationValidator();
 int selectionDisplayValidator();
 studentInfo singleInputModule(int selection);
-// void resulter(vector<studentInfo> allStudentInfo);
+void resulter(customCst allStudentInfo);
 void consoleLog(std::string data);
-// vector<studentInfo> readData(std::string fileName, int readingType);
-// void writeData(vector<studentInfo> allStudentInfo, std::string fileName, int spec);
+customCst readData(std::string fileName, int readingType);
+void writeData(customCst allStudentInfo, std::string fileName, int spec);
 void scenarioTester();
 void generateTestFiles();
 void dotests();

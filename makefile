@@ -1,5 +1,5 @@
-main: clean dataTypes.o  functions.o app.o
-	g++ -o main main.cpp  dataTypes.o  functions.o app.o
+main: clean dataTypes.o special.o functions.o app.o
+	g++ -o main main.cpp dataTypes.o special.o functions.o app.o
 app:
 	g++ -c app.cpp
 functions:
